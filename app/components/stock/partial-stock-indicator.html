@@ -1,0 +1,88 @@
+<div>
+    <h4>Share Id: {{indicatorInput.shareId}}</h4>
+    <div class="row detail-sub-title" ng-init="shareDetailExpanded=true">
+        <label>Indicators - {{indicatorDetail.tradingDate}}</label>
+    </div>
+    <div class="detail-sub-section" ng-show="shareDetailExpanded">
+        <table class="table table-striped table-hover table-detail-view " style="font-size: 1em">
+
+            <tbody>
+            <tr>
+                <td class="table-detail-key" style="width: 50px">Price</td>
+                <td class="table-detail-value">
+                    <div class="col-sm-6">Open: {{indicatorDetail.open | number:4}}</div>
+                    <div class="col-sm-6">Close: {{indicatorDetail.close| number:4}}</div>
+                    <div class="col-sm-6">Low: {{indicatorDetail.low | number:4}}</div>
+                    <div class="col-sm-6">High: {{indicatorDetail.high | number:4}}</div>
+                    <div class="col-sm-10">Volume: {{indicatorDetail.volumn}}</div>
+                </td>
+            </tr>
+            <tr>
+                <td>Move Average</td>
+                <td>
+                    <div class="col-sm-6">SMA5: {{indicatorDetail.smA5 | number:4}}</div>
+                    <div class="col-sm-6">SMA10: {{indicatorDetail.smA10 | number:4}}</div>
+                    <div class="col-sm-6">SMA30: {{indicatorDetail.smA30 | number:4}}</div>
+                    <div class="col-sm-6">SMA50: {{indicatorDetail.smA50 | number:4}}</div>
+                    <div class="col-sm-6">SMA200: {{indicatorDetail.smA200 | number:4}}</div>
+                    <div class="col-sm-6">EMA10: {{indicatorDetail.emA10 | number:4}}</div>
+                    <div class="col-sm-6">EMA20: {{indicatorDetail.emA20 | number:4}}</div>
+                    <div class="col-sm-6">EMA50: {{indicatorDetail.emA50 | number:4}}</div>
+                </td>
+            </tr>
+            <tr>
+                <td>Bollinger Bands</td>
+                <td>
+                    <div class="col-sm-6">BB_High: {{indicatorDetail.bB_High | number:4}}</div>
+                    <div class="col-sm-6">BB_Middle: {{indicatorDetail.bB_Middle | number:4}}</div>
+                    <div class="col-sm-6">BB_Low: {{indicatorDetail.bB_Low | number:4}}</div>
+                </td>
+            </tr>
+            <tr>
+                <td>ADX</td>
+                <td>
+                    <div class="col-sm-6">ADX_Plus: {{indicatorDetail.adX_Plus | number:4}}</div>
+                    <div class="col-sm-6">ADX_Minus: {{indicatorDetail.adX_Minus | number:4}}</div>
+                    <div class="col-sm-6">ADX: {{indicatorDetail.adx | number:4}}</div>
+                </td>
+            </tr>
+            <tr>
+                <td>MACD</td>
+                <td>
+                    <div class="col-sm-6">MACD: {{indicatorDetail.macd | number:4}}</div>
+                    <div class="col-sm-6">Signal: {{indicatorDetail.macD_Signal | number:4}}</div>
+                    <div class="col-sm-6">Hist: {{indicatorDetail.macD_Hist | number:4}}</div>
+                </td>
+            </tr>
+            <tr>
+                <td>Heikin Ashi</td>
+                <td>
+                    <div class="col-sm-6">Open: {{indicatorDetail.heikin_Open | number:4}}</div>
+                    <div class="col-sm-6">Close: {{indicatorDetail.heikin_Close| number:4}}</div>
+                    <div class="col-sm-6">Low: {{indicatorDetail.heikin_Low | number:4}}</div>
+                    <div class="col-sm-6">High: {{indicatorDetail.heikin_High | number:4}}</div>
+                </td>
+            </tr>
+            <tr>
+                <td>Stochastic</td>
+                <td>
+                    <div class="col-sm-6">K: {{indicatorDetail.stochastic_K | number:4}}</div>
+                    <div class="col-sm-6">D: {{indicatorDetail.stochastic_D | number:4}}</div>
+                </td>
+            </tr>
+            <tr>
+                <td>RSI</td>
+                <td>
+                    <div class="col-sm-6">RSI: {{indicatorDetail.rsi | number:4}}</div>
+                </td>
+            </tr>
+            <tr>
+                <td>Williams %R</td>
+                <td>
+                    <div class="col-sm-6">WR: {{indicatorDetail.wr | number:4}}</div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

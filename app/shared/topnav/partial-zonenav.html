@@ -1,0 +1,56 @@
+<div class="zone-nav">
+    <!--    <span class="navbar-brand" id="zone-selector">
+                         <select id="scanRule" ng-model="selectedId"
+                                 ng-options="z.id as z.name for z in zoneList"
+                                 ng-change="changeZone()" required>
+                             <option value="">Current</option>
+                         </select>
+        </span>
+        <span class="btn btn-default" ng-disabled="!isDiffZone" ng-click="changeApply()">Apply</span>
+        <span ng-show="currentZone != null">
+        |   <span class="zone-nav-detail">
+                <span>{{currentZone.name}}: </span>
+                {{currentZone.tradingDate}}
+                <i class="fa fa-arrow-right" ng-click="console.log('sdsdsds')"></i>
+            </span>
+        </span>-->
+
+    <div style="padding-top: 8px">
+        <span class="zone-nav-detail">{{envString}}</span>
+        <i class="fa fa-arrow-right" ng-click="changeNextDay()" ng-show="currentZone"></i>
+        <i class="fa fa-cog" ng-click="changeTradingEnv()"></i>
+    </div>
+    <script type="text/ng-template" id="temp-set-environment.html">
+        <form class="form-vertical" name="envForm" role="form">
+            <h4 style="font-weight: bold">Set environment</h4>
+            <hr>
+            <div class="form-group">
+                <label for="envZone" style="font-size: 1.0em">Zone:</label>
+                <select id="envZone" ng-model="env.selectedZoneId"
+                        ng-options="z.id as z.name for z in zoneList"
+                        ng-change="changeEnvZone()">
+                    <option value="">Current</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="envAccount" style="font-size: 1.0em">Account:</label>
+                <select id="envAccount" ng-model="env.selectedAccountId"
+                        ng-options="z.id as z.name for z in accountList"
+                        ng-change="changeAccount()" required>
+                </select>
+            </div>
+            <div class="form-group">
+                <div>
+                    <button type="button" class="btn btn-primary"
+                            ng-disabled="envForm.$invalid"
+                            ng-click="submitEnv(envForm)">
+                        Submit
+                    </button>
+                </div>
+            </div>
+            <!--{{env | json}}-->
+        </form>
+
+    </script>
+
+</div>

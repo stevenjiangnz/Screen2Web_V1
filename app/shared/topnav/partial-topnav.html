@@ -1,0 +1,23 @@
+<nav id="top-nav-bar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <span class="navbar-brand"><i class="fa fa-lg fa-chain "></i>Screen<span>2</span></span>
+        </div>
+        <ul class="nav navbar-nav" ng-show="authState.isAuthed">
+            <li class="active"><a ui-sref="home">Home</a></li>
+            <li><a ui-sref="stocksearch">Stock</a></li>
+            <li><a ui-sref="analysis.rule">Analysis</a></li>
+            <li><a ui-sref="trade.accountdetail">Trade</a></li>
+            <li><a ui-sref="plan.list">Plan</a></li>
+            <!--<li><a ui-sref="setting.list">Settings</a></li>-->
+            <li><a ui-sref="admin.functoid" access="Admin">Admin</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li ng-show="authState.isAuthed"><a> <i class="fa fa-user"></i> Welcome {{authState.authData.username}}</a></li>
+            <li ng-show="!authState.isAuthed"><a ui-sref="login"><i class="fa fa-sign-in"></i> Login</a></li>
+            <li ng-show="authState.isAuthed"><a ng-click="vm.logout()" href="#"><i class="fa fa-sign-out"></i> Logout</a></li>
+            <li ng-show="!authState.isAuthed"><a ui-sref="register"><i class="fa fa-sign-in fa-rotate-270"></i> Register</a></li>
+        </ul>
+        <zone-nav ng-show="authState.isAuthed"></zone-nav>
+    </div>
+</nav>

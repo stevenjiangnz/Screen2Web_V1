@@ -1,0 +1,59 @@
+
+<div class="col-md-4 col-md-offset-4 content-panel" >
+    <h2>Register</h2>
+
+    <div ng-show="vm.message" class="text-danger message-box">
+        <h4>
+            {{::vm.message}}
+        </h4>
+        <ul>
+            <li ng-repeat="err in vm.errors">{{::err}}</li>
+        </ul>
+    </div>
+    <div ng-show="vm.messageSuccess" class="message-box">
+        <h4>{{vm.messageSuccess}}</h4>
+    </div>
+
+    <form name="form" class="normal-form" ng-submit="vm.register()" role="form" ng-hide="vm.messageSuccess">
+        <div class="form-group" ng-class="{ 'has-error': form.email.$dirty && form.email.$error.required }">
+            <label for="email">Email</label><i class="fa fa-asterisk required"></i>
+            <input type="email" name="email" id="email" class="form-control" ng-model="vm.user.email" required />
+            <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">Email is required</span>
+            <span ng-show="form.email.$dirty && form.email.$error.email" class="help-block">Email is not valid</span>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
+            <label for="firstname">First name</label><i class="fa fa-asterisk required"></i>
+            <input type="text" name="firstName" id="firstname" class="form-control" ng-model="vm.user.firstName" required />
+            <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">First name is required</span>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.lastName.$dirty && form.lastName.$error.required }">
+            <label for="lastname">Last name</label><i class="fa fa-asterisk required"></i>
+            <input type="text" name="lastName" id="lastname" class="form-control" ng-model="vm.user.lastName" required />
+            <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">Last name is required</span>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+            <label for="username">Username</label><i class="fa fa-asterisk required"></i>
+            <input type="text" name="username" id="username" class="form-control" ng-model="vm.user.username" required />
+            <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+            <label for="password">Password</label><i class="fa fa-asterisk required"></i>
+            <input type="password" name="password" id="password" class="form-control" ng-model="vm.user.password" required />
+            <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.password2.$dirty && form.password2.$error.required }">
+            <label for="password2">Password (repeat)</label><i class="fa fa-asterisk required"></i>
+            <input type="password" name="password2" id="password2" class="form-control" ng-model="vm.user.password2" required
+                   compare-to="vm.user.password"/>
+            <span ng-show="form.password2.$dirty && form.password2.$error.required" class="help-block">Password (repeat) is required</span>
+            <span ng-show="form.password2.$dirty && form.password2.$error.compareTo" class="help-block">Password (repeat) is not match</span>
+        </div>
+        <div class="form-actions">
+            <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Register</button>
+
+            <div class="btn btn-default" ng-click="vm.cancel()" class="btn btn-link">Cancel</div>
+
+            <i ng-show="vm.dataLoading" class="fa fa-spinner fa-spin"></i>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,209 @@
+<div>
+    <div class="row">
+        <div class="row">
+            <div class="col-lg-5"><h4>Open Orders</h4></div>
+
+            <div class="col-lg-7 pull-right">
+                <div class="btn btn-default pull-right" ng-click="createOrder()">
+                    Create
+                </div>
+            </div>
+
+        </div>
+        <div>
+            <div ng-show="!vm.isloading">
+                <div>
+                    <div class="pull-right" style="padding-right: 20px" ng-show="orderList.length > 0"><h4>
+                        Total: {{orderList.length}}</h4>
+                    </div>
+                    <div class="row table-container">
+                        <table class="table table-bordered table-striped ">
+                            <thead>
+                            <tr>
+                                <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'id'; sortReverse = !sortReverse">
+                                        ID
+                                        <span ng-show="sortType == 'id' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'id' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'shareId'; sortReverse = !sortReverse">
+                                        Share
+                                        <span ng-show="sortType == 'shareId' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'shareId' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'latestTradingDate'; sortReverse = !sortReverse">
+                                        T Date
+                                        <span ng-show="sortType == 'latestTradingDate' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'latestTradingDate' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'direction'; sortReverse = !sortReverse">
+                                        Direction
+                                        <span ng-show="sortType == 'direction' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'direction' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'orderPrice'; sortReverse = !sortReverse">
+                                        Order Price
+                                        <span ng-show="sortType == 'orderPrice' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'orderPrice' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'size'; sortReverse = !sortReverse">
+                                        Size
+                                        <span ng-show="sortType == 'size' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'size' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'orderValue'; sortReverse = !sortReverse">
+                                        Order Value
+                                        <span ng-show="sortType == 'orderValue' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'orderValue' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'reserve'; sortReverse = !sortReverse">
+                                        Reserve
+                                        <span ng-show="sortType == 'reserve' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'reserve' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'fee'; sortReverse = !sortReverse">
+                                        Fee
+                                        <span ng-show="sortType == 'fee' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'fee' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'stop'; sortReverse = !sortReverse">
+                                        Stop
+                                        <span ng-show="sortType == 'stop' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'stop' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'limit'; sortReverse = !sortReverse">
+                                        Limit
+                                        <span ng-show="sortType == 'limit' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'limit' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+
+                                <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'updateDate'; sortReverse = !sortReverse">
+                                        Created
+                                        <span ng-show="sortType == 'updateDate' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'updateDate' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th></th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr dir-paginate="b in orderList | orderBy:sortType:sortReverse | itemsPerPage:15">
+
+                                <td>{{b.id}}</td>
+                                <td>
+                                    <a ui-sref="stock({shareId:b.shareId})" target="sharechart">{{getShare(b.shareId).symbol}} ({{getShare(b.shareId).id}})</a>
+                                </td>
+                                <td>{{b.tradingOrderDate}}</td>
+                                <td>{{b.direction}}</td>
+                                <td>{{b.orderPrice | currency}}</td>
+                                <td>{{b.size}}</td>
+                                <td>{{b.orderValue | currency}}</td>
+                                <td>{{b.reserve | currency}}</td>
+                                <td>{{b.fee | currency}}</td>
+                                <td>{{b.stop | currency}}</td>
+                                <td>{{b.limit | currency}}</td>
+                                <td>{{b.updateDate | date : 'yyyy-MM-dd, hh:mm a'}}</td>
+                                <td>
+                                    <i class="fa fa-pencil-square-o icon-edit"
+                                       ng-click="updateOrder(b)"></i>
+                                    <i class="fa fa-trash-o icon-delete"
+                                       ng-click="removeOrder(b)"></i>
+                                    <i class="fa fa-arrow-right"
+                                       ng-click="showShareDetails(b)"></i>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--{{orderList | json}}-->
+                    <div class="pull-right">
+                        <dir-pagination-controls></dir-pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row loading-section clearfix" ng-show="vm.isloading">
+            <h4><i class="fa fa-tasks"></i>
+                Loading data...</h4>
+        </div>
+    </div>
+
+
+
+
+    <div style="width: 600px; margin-top: 20px" >
+        <hr>
+        <div class="row detail-sub-title" ng-init="orderFormExpanded=false">
+            <i class="fa fa-minus-square pull-left" ng-show="orderFormExpanded"
+               ng-click="orderFormExpanded=!orderFormExpanded"></i>
+            <i class="fa fa-plus-square pull-left" ng-show="!orderFormExpanded"
+               ng-click="orderFormExpanded=!orderFormExpanded"></i>
+
+        </div>
+        <div ng-show="orderFormExpanded==true">
+            <order-detail mode="detailMode" order="currentOrder"
+                          order-updated="orderUpdated(order)"
+                          order-created="orderCreated(order)"></order-detail>
+        </div>
+    </div>
+</div>

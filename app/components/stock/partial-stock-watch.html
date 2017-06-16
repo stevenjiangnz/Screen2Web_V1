@@ -1,0 +1,10 @@
+<div class="watch-detail-panel">
+    <h4>Share ID: {{currentShare.id}}</h4>
+    <h4>Watch Lists:</h4>
+    <ul class="list-group">
+        <li class="list-group-item" ng-repeat="watch in watchList track by $index">
+            <div><label><input type="checkbox" ng-model="watch.ticked" ng-click="setWatchListShare(watch)">{{watch.name}}</label></div>
+            <div><label class="hint">{{watch.description}}</label></div>
+        </li>
+     </ul>
+</div>

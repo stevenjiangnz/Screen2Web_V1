@@ -1,0 +1,163 @@
+<div>
+    <hr>
+    <h2>Trade Review</h2>
+
+    <div class="row position-review" >
+        <div class="row">
+            <div class="col-lg-4">
+                <label>Position Id: {{currentPosition.id}}</label>
+            </div>
+            <div class="col-lg-4">
+                <label>Is Long: {{localReview.isEntryLong}}</label>
+            </div>
+            <div class="col-lg-4">
+                <label>Entry BB Per: {{localReview.bbEntryPercent | number :2}}%</label>
+            </div>
+            <div class="col-lg-4">
+                <label>Entry Per: {{localReview.entryPercent | number :2}}%</label>
+            </div>
+            <div class="col-lg-4">
+                <label>Days Span: {{localReview.daysSpan}}</label>
+            </div>
+            <div class="col-lg-4">
+                <label>Diff: <span ng-class="{'positive': localReview.diff > 0, 'negative': localReview.diff < 0}">{{localReview.diff | currency}}</span></label>
+            </div>
+            <div class="col-lg-4">
+                <label>Diff Per: <span ng-class="{'positive': localReview.diff > 0, 'negative': localReview.diff < 0}">{{localReview.diff_Per | number :2}}%</span></label>
+            </div>
+            <div class="col-lg-4">
+                <label>Exit BB Per: <span ng-hide="localReview.bbExitPercent===null"> {{localReview.bbExitPercent | number :2}}%</span></label>
+            </div>
+            <div class="col-lg-4">
+                <label>Exit Per: <span ng-hide="localReview.exitPercent===null"> {{localReview.exitPercent | number :2}}%</span></label>
+            </div>
+            <div class="col-lg-4">
+                <label>Updated: <span> {{localReview.updatedDT | date : 'yyyy-MM-dd, hh:mm a'}}</span></label>
+            </div>
+        </div>
+        <div class="row">
+            <hr class="col-lg-11">
+        </div>
+        <div class="row">
+            <form class="form-vertical" name="reviewForm">
+                <fieldset>
+                    <div class="form-group" >
+                        <label>Entry Timing: </label>
+                        <span uib-rating ng-model="localReview.entryTiming" max="9"></span> {{localReview.entryTiming}}
+                        <label class="pull-right"> 1 - 9, 1: early, 5: perfect, 9: late</label>
+                    </div>
+                    <div class="form-group" >
+                        <label>Trend Rating: </label>
+                        <span uib-rating ng-model="localReview.trendRating" max="9"></span> {{localReview.trendRating}}
+                        <label class="pull-right"> 1 - 9, 1: weak, 5: medium, 9: string</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Is Direction Correct: </label>
+                        <span>
+                            <label class="radio-inline"><input type="radio" value="unknown" name="isDirectionCorrect"
+                                                               ng-model="localReview.isDirectionCorrectTemp">Unknown</label>
+                            <label class="radio-inline"><input type="radio" value="yes" name="isDirectionCorrect"
+                                                               ng-model="localReview.isDirectionCorrectTemp">Yes</label>
+                            <label class="radio-inline"><input type="radio" value="no" name="isDirectionCorrect"
+                                                               ng-model="localReview.isDirectionCorrectTemp">No</label>
+                        </span>
+                    </div>
+                    <div class="form-group" >
+                        <label>Profit Rating: </label>
+                        <span uib-rating ng-model="localReview.profitRating" max="9"></span> {{localReview.profitRating}}
+                        <label class="pull-right"> 1 - 9, 1: poor, 5: ok, 9: excellent</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Is Reverse: </label>
+                        <span>
+                            <label class="radio-inline"><input type="radio" value="unknown" name="isReverse"
+                                                               ng-model="localReview.isReverseTemp">Unknown</label>
+                            <label class="radio-inline"><input type="radio" value="yes" name="isReverse"
+                                                               ng-model="localReview.isReverseTemp">Yes</label>
+                            <label class="radio-inline"><input type="radio" value="no" name="isReverse"
+                                                               ng-model="localReview.isReverseTemp">No</label>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Is Add Size: </label>
+                        <span>
+                            <label class="radio-inline"><input type="radio" value="unknown" name="isAddSize"
+                                                               ng-model="localReview.isAddSizeTemp">Unknown</label>
+                            <label class="radio-inline"><input type="radio" value="yes" name="isAddSize"
+                                                               ng-model="localReview.isAddSizeTemp">Yes</label>
+                            <label class="radio-inline"><input type="radio" value="no" name="isAddSize"
+                                                               ng-model="localReview.isAddSizeTemp">No</label>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Is Stop Triggered: </label>
+                        <span>
+                            <label class="radio-inline"><input type="radio" value="unknown" name="isStopTriggered"
+                                                               ng-model="localReview.isStopTriggeredTemp">Unknown</label>
+                            <label class="radio-inline"><input type="radio" value="yes" name="isStopTriggered"
+                                                               ng-model="localReview.isStopTriggeredTemp">Yes</label>
+                            <label class="radio-inline"><input type="radio" value="no" name="isStopTriggered"
+                                                               ng-model="localReview.isStopTriggeredTemp">No</label>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Is Limit Triggered: </label>
+                        <span>
+                            <label class="radio-inline"><input type="radio" value="unknown" name="isLimitTriggered"
+                                                               ng-model="localReview.isLimitTriggeredTemp">Unknown</label>
+                            <label class="radio-inline"><input type="radio" value="yes" name="isLimitTriggered"
+                                                               ng-model="localReview.isLimitTriggeredTemp">Yes</label>
+                            <label class="radio-inline"><input type="radio" value="no" name="isLimitTriggered"
+                                                               ng-model="localReview.isLimitTriggeredTemp">No</label>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Is Exit BB Triggered: </label>
+                        <span>
+                            <label class="radio-inline"><input type="radio" value="unknown" name="isExitBBTriggered"
+                                                               ng-model="localReview.isExitBBTriggeredTemp">Unknown</label>
+                            <label class="radio-inline"><input type="radio" value="yes" name="isExitBBTriggered"
+                                                               ng-model="localReview.isExitBBTriggeredTemp">Yes</label>
+                            <label class="radio-inline"><input type="radio" value="no" name="isExitBBTriggered"
+                                                               ng-model="localReview.isExitBBTriggeredTemp">No</label>
+                        </span>
+                    </div>
+                    <div class="form-group" >
+                        <label>Volatility Rating: </label>
+                        <span uib-rating ng-model="localReview.volatility" max="9"></span> {{localReview.volatility}}
+                        <label class="pull-right"> 1 - 9, 1: low, 5: medium, 9: high</label>
+                    </div>
+                    <div class="form-group" >
+                        <label>Exit Timing: </label>
+                        <span uib-rating ng-model="localReview.exitTiming" max="9"></span> {{localReview.exitTiming}}
+                        <label class="pull-right"> 1 - 9, 1: early, 5: perfect, 9: late</label>
+                    </div>
+                    <div class="form-group" >
+                        <label>Overall Rating: </label>
+                        <span uib-rating ng-model="localReview.overallRating" max="9"></span> {{localReview.overallRating}}
+                        <label class="pull-right"> 1 - 9, 1: poor, 5: ok, 9: excellent</label>
+                    </div>
+                    <!--{{localOrder | json}}-->
+
+                    <div class="form-group" >
+                        <textarea ui-tinymce="tinymceOptions" ng-model="localReview.notes"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <div>
+                            <button type="submit" class="btn btn-primary"
+                                    ng-click="submitReview(reviewForm)"
+                                    ng-disabled="!reviewForm.$valid">Submit
+                            </button>
+                            <button type="button" class="btn btn-default"
+                                    ng-click="cancel(reviewForm)">Cancel
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+
+    </div>
+
+</div>

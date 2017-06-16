@@ -1,0 +1,345 @@
+<div>
+    <div class="col-sm-2 left-panel">
+        <div class="panel panel-primary daily-stock-filter" ng-show="!vm.dataLoading" style="margin-top: 50px">
+            <div class="panel-heading">
+                <h3 class="panel-title btn btn-default btn-xs">Filter</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-sm-10 content-panel">
+        <div>
+            <div class="col-sm-8 middle-panel">
+                <div>
+                    <div class="row">
+
+                        <div class="col-lg-5"><h1>Scan Result</h1></div>
+                        <div class="col-lg-7"></div>
+
+                    </div>
+
+                    <div ng-show="!vm.dataLoading">
+                        <div class="pull-right" style="padding-right: 20px" ng-show="vm.listDisplay.length > 0"><h4>
+                            Total: {{vm.listDisplay.length}}</h4>
+                        </div>
+                        <div class="row daily-stock-grid" ng-show="vm.listDisplay.length > 0">
+
+                            <table class="table table-striped table-bordered daily-stock-table">
+                                <thead>
+                                <tr>
+                                    <th style="width: 65px">
+                                         <span class="sortable-header"
+                                               ng-click="sortType = 'tradingDate'; sortReverse = !sortReverse">
+                                        Trading Date
+                                        <span ng-show="sortType == 'tradingDate' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'tradingDate' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th style="width: 50px">
+                                    <span class="sortable-header"
+                                          ng-click="sortType = 'shareId'; sortReverse = !sortReverse">
+                                        Share ID
+                                        <span ng-show="sortType == 'shareId' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'shareId' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                    </span>
+                                    </th>
+                                    <th style="width:50px">
+                                         <span class="sortable-header"
+                                               ng-click="sortType = 'day1Diff'; sortReverse = !sortReverse">
+                                        D1 Diff
+                                        <span ng-show="sortType == 'day1Diff' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'day1Diff' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th style="width:50px">
+                                         <span class="sortable-header"
+                                               ng-click="sortType = 'day3Diff'; sortReverse = !sortReverse">
+                                        D3 Diff
+                                        <span ng-show="sortType == 'day3Diff' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'day3Diff' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th style="width:50px">
+                                         <span class="sortable-header"
+                                               ng-click="sortType = 'ma5p'; sortReverse = !sortReverse">
+                                        MA5 P
+                                        <span ng-show="sortType == 'ma5p' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'ma5p' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th style="width:50px">
+                                         <span class="sortable-header"
+                                               ng-click="sortType = 'ma5b'; sortReverse = !sortReverse">
+                                        MA5 B
+                                        <span ng-show="sortType == 'ma5b' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'ma5b' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th style="width:50px">
+                                         <span class="sortable-header"
+                                               ng-click="sortType = 'profitDay'; sortReverse = !sortReverse">
+                                        P Day
+                                        <span ng-show="sortType == 'profitDay' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'profitDay' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th style="width:50px">
+                                         <span class="sortable-header"
+                                               ng-click="sortType = 'stopDay'; sortReverse = !sortReverse">
+                                        S Day
+                                        <span ng-show="sortType == 'stopDay' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'stopDay' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+
+                                    <th style="width:50px">
+                                         <span class="sortable-header"
+                                               ng-click="sortType = 'maxGain'; sortReverse = !sortReverse">
+                                        Max Gain
+                                        <span ng-show="sortType == 'maxGain' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'maxGain' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th style="width:50px">
+                                         <span class="sortable-header"
+                                               ng-click="sortType = 'gainDay'; sortReverse = !sortReverse">
+                                        G Day
+                                        <span ng-show="sortType == 'gainDay' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'gainDay' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th style="width:50px">
+                                         <span class="sortable-header"
+                                               ng-click="sortType = 'maxLoss'; sortReverse = !sortReverse">
+                                        Max Loss
+                                        <span ng-show="sortType == 'maxLoss' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'maxLoss' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th style="width:50px">
+                                         <span class="sortable-header"
+                                               ng-click="sortType = 'lossDay'; sortReverse = !sortReverse">
+                                        L Day
+                                        <span ng-show="sortType == 'lossDay' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'lossDay' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+
+                                    <th style="width:50px">
+
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr dir-paginate="i in vm.listDisplay | orderBy:sortType:sortReverse | itemsPerPage: 15">
+                                    <td><span class="link-button" ng-click="displayMatchChart(i.shareId, i.tradingDate)"> {{ i.tradingDate }}</span></td>
+                                    <td>{{ i.shareId }}</td>
+                                    <td ng-class="{'positive': i.day1Diff > 0, 'negative': i.day1Diff < 0}">{{ i.day1Diff | number : 2 }}%</td>
+                                    <td ng-class="{'positive': i.day3Diff > 0, 'negative': i.day3Diff < 0}">{{ i.day3Diff | number : 2 }}%</td>
+                                    <td>{{ i.ma5p }}</td>
+                                    <td>{{ i.ma5b }}</td>
+                                    <td>{{ i.profitDay}}</td>
+                                    <td>{{ i.stopDay}}</td>
+                                    <td ng-class="{'positive': i.maxGain > 0, 'negative': i.maxGain < 0}">{{
+                                        i.maxGain | number: 2}}%
+                                    </td>
+                                    <td>{{ i.gainDay }}</td>
+                                    <td ng-class="{'positive': i.maxLoss > 0, 'negative': i.maxLoss < 0}">
+                                        {{
+                                        i.maxLoss | number: 2}}%
+                                    </td>
+                                    <td>{{i.lossDay}}
+                                    </td>
+                                    <td>
+                                        <i class="fa fa-flag" aria-hidden="true"
+                                           ng-click="displayMatch(i)"></i>
+
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <!--{{vm.indicatorList.length}}-->
+                            <div class="pull-right">
+                                <dir-pagination-controls></dir-pagination-controls>
+                            </div>
+
+                        </div>
+
+                        <div class="row" ng-show="vm.listDisplay.length > 0">
+                            <div class="col-sm-3">
+                                <h4>Chart</h4>
+                            </div>
+                            <div class="col-sm-9">
+                                <!--<span class="pull-right">sss</span>-->
+                            </div>
+                            <div class="col-sm-12">
+                                <high-chart options="summaryOptions" chart="chartControl"></high-chart>
+                            </div>
+                        </div>
+
+
+                        <div ng-show="vm.listDisplay.length == 0" style="padding: 40px 40px 40px 40px">
+                            <h4>No item found.</h4>
+                        </div>
+                    </div>
+                    <div class="row loading-section clearfix" ng-show="vm.isloading">
+                        <h4><i class="fa fa-tasks"></i>
+                            Loading data...</h4>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-sm-4 right-panel">
+                <div class="detail-panel" ng-if="currentMatch">
+                    <div class="detail-container">
+                        <ul class="nav nav-pills" ng-init="watchVm.activeDetailPanel='details'">
+                            <li class="active"><a>Details</a>
+                            </li>
+
+                        </ul>
+                        <div class="panel panel-default " ng-if="watchVm.activeDetailPanel=='details'">
+                            <div class="panel-body">
+                                <div>
+                                    <h4>Verification Tickers</h4>
+                                </div>
+
+                                <div class="row daily-stock-grid" ng-show="vm.listDisplay.length > 0">
+
+                                    <table class="table table-striped table-bordered daily-stock-table">
+                                        <thead>
+                                        <tr>
+
+                                            <th>
+                                         <span class="sortable-header"
+                                               ng-click="sortType = 'tradingDate'; sortReverse = !sortReverse">
+                                        Trading Date
+                                        <span ng-show="sortType == 'tradingDate' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'tradingDate' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                            </th>
+                                            <th>
+                                         <span class="sortable-header"
+                                               ng-click="sortType = 'open'; sortReverse = !sortReverse">
+                                        Open
+                                        <span ng-show="sortType == 'open' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'open' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                            </th>
+                                            <th>
+                                         <span class="sortable-header"
+                                               ng-click="sortType = 'low'; sortReverse = !sortReverse">
+                                        Low
+                                        <span ng-show="sortType == 'low' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'low' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                            </th>
+                                            <th>
+                                         <span class="sortable-header"
+                                               ng-click="sortType = 'high'; sortReverse = !sortReverse">
+                                        High
+                                        <span ng-show="sortType == 'high' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'high' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                            </th>
+                                            <th >
+                                         <span class="sortable-header"
+                                               ng-click="sortType = 'close'; sortReverse = !sortReverse">
+                                        Close
+                                        <span ng-show="sortType == 'close' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'close' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                            </th>
+                                            <th >
+                                         <span class="sortable-header"
+                                               ng-click="sortType = 'diff'; sortReverse = !sortReverse">
+                                        Diff
+                                        <span ng-show="sortType == 'diff' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'diff' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                            </th>
+                                            <th >
+                                         <span class="sortable-header"
+                                               ng-click="sortType = 'diffh'; sortReverse = !sortReverse">
+                                        Diff H
+                                        <span ng-show="sortType == 'diffh' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'diffh' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                            </th>
+                                            <th >
+                                         <span class="sortable-header"
+                                               ng-click="sortType = 'diffl'; sortReverse = !sortReverse">
+                                        Diff L
+                                        <span ng-show="sortType == 'diffl' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'diffl' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="s in verificationList | orderBy:sortType:sortReverse">
+                                            <td>{{ s.tradingDate }}</td>
+                                            <td>{{ s.open | number:2 }}</td>
+                                            <td>{{ s.low | number:2 }}</td>
+                                            <td>{{ s.high | number:2 }}</td>
+                                            <td>{{ s.close | number:2 }}</td>
+                                            <td ng-class="{'positive': s.diff > 0, 'negative': s.diff < 0}">{{ s.diff | number:2 }}%</td>
+                                            <td ng-class="{'positive': s.diffh > 0, 'negative': s.diffh < 0}">{{ s.diffh | number:2 }}%</td>
+                                            <td ng-class="{'positive': s.diffl > 0, 'negative': s.diffl < 0}">{{ s.diffl | number:2 }}%</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>

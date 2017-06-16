@@ -1,0 +1,199 @@
+<div class="row">
+    <div class="col-sm-8 middle-panel">
+        <div class="row">
+            <div class="row">
+                <div class="col-lg-5"><h1>Manage Functoid List</h1></div>
+
+                <div class="col-lg-7 pull-right">
+                    <div class="btn btn-default pull-right" ng-click="createFunctoid()">
+                        Create
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div ng-show="!vm.isloading">
+                    <div>
+                        <div class="pull-right" style="padding-right: 20px" ng-show="functoidList.length > 0"><h4>
+                            Total: {{functoidList.length}}</h4>
+                        </div>
+                        <div class="row table-container">
+                            <table class="table table-bordered table-striped ">
+                                <thead>
+                                <tr>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'id'; sortReverse = !sortReverse">
+                                        ID
+                                        <span ng-show="sortType == 'id' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'id' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                                        Name
+                                        <span ng-show="sortType == 'name' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'name' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'description'; sortReverse = !sortReverse">
+                                        Description
+                                        <span ng-show="sortType == 'description' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'description' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'usage'; sortReverse = !sortReverse">
+                                        Usage
+                                        <span ng-show="sortType == 'usage' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'usage' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'returnType'; sortReverse = !sortReverse">
+                                        Return Type
+                                        <span ng-show="sortType == 'returnType' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'returnType' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'defaultValue'; sortReverse = !sortReverse">
+                                        Default Value
+                                        <span ng-show="sortType == 'defaultValue' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'defaultValue' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr dir-paginate="func in functoidList | orderBy:sortType:sortReverse | itemsPerPage:15">
+
+                                    <td>{{func.id}}</td>
+                                    <td>{{func.name}}</td>
+                                    <td>{{func.description}}</td>
+                                    <td>{{func.usage}}</td>
+                                    <td>{{func.returnType}}</td>
+                                    <td>{{func.defaultValue}}</td>
+                                    <td>
+                                        <i class="fa fa-pencil-square-o icon-edit"
+                                           ng-click="updateFunctoid(func)"></i>
+                                        <i class="fa fa-trash-o icon-delete"
+                                           ng-click="removeFunctoid(func)"></i>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pull-right">
+                            <dir-pagination-controls></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row loading-section clearfix" ng-show="vm.isloading">
+                <h4><i class="fa fa-tasks"></i>
+                    Loading data...</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4 right-panel">
+        <div class="detail-panel">
+            <div class="detail-container">
+                <ul class="nav nav-pills" ng-init="watchVm.activeDetailPanel='details'">
+                    <li class="active"><a>Details</a>
+                    </li>
+
+                </ul>
+                <div class="panel panel-default" id="newSection" ng-show="detailMode == 'new' || detailMode == 'update'">
+                    <div class="panel-body">
+                        <div>
+                            <h4>Functoid Details</h4>
+                        </div>
+                        <div class="detail-sub-section">
+                            <form class="form-vertical" name="functoidForm">
+                                <fieldset>
+                                    <div class="form-group" ng-show="detailMode == 'update'">
+                                        <label>ID: {{localFunc.id}}</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="funcName" class="control-label">Name</label>
+                                        <i class="fa fa-asterisk indicator-required"></i>
+                                        <div>
+                                            <input type="text" class="form-control" id="funcName" placeholder="Name"
+                                                   ng-model="localFunc.name" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="funcDescription" class="control-label">Description</label>
+                                        <div>
+                                            <input type="text" class="form-control" id="funcDescription"
+                                                   placeholder="Description"
+                                                   ng-model="localFunc.description">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="funcUsage" class="control-label">Usage</label>
+                                        <i class="fa fa-asterisk indicator-required"></i>
+                                        <div>
+                                            <input type="text" class="form-control" id="funcUsage"
+                                                   placeholder="Usage Example"
+                                                   ng-model="localFunc.usage" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="funReturnType" class="control-label">Return Type</label>
+                                        <i class="fa fa-asterisk indicator-required"></i>
+                                        <div>
+                                            <input type="text" class="form-control" id="funReturnType"
+                                                   placeholder="Return Type"
+                                                   ng-model="localFunc.returnType" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="funcDefaultValue" class="control-label">Default Value</label>
+                                        <i class="fa fa-asterisk indicator-required"></i>
+                                        <div>
+                                            <input type="text" class="form-control" id="funcDefaultValue"
+                                                   placeholder="Default Value"
+                                                   ng-model="localFunc.defaultValue" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div>
+                                            <button type="submit" class="btn btn-primary"
+                                                    ng-click="submitNewFunctoid(functoidForm)"
+                                                    ng-disabled="!functoidForm.$valid">Submit
+                                            </button>
+                                            <button type="button" class="btn btn-default"
+                                                    ng-click="cancel(functoidForm)">Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,287 @@
+<div class="row">
+    <div class="col-sm-8 middle-panel">
+        <div class="row">
+            <div class="row">
+                <div class="col-lg-5"><h1>Manage Scan List</h1></div>
+
+                <div class="col-lg-7 pull-right">
+                    <div class="btn btn-default pull-right" ng-click="createScan()">
+                        Create
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div ng-show="!vm.isloading">
+                    <div>
+                        <div class="pull-right" style="padding-right: 20px" ng-show="scanList.length > 0"><h4>
+                            Total: {{scanList.length}}</h4>
+                        </div>
+                        <div class="row table-container">
+                            <table class="table table-bordered table-striped ">
+                                <thead>
+                                <tr>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'id'; sortReverse = !sortReverse">
+                                        ID
+                                        <span ng-show="sortType == 'id' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'id' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                                        Name
+                                        <span ng-show="sortType == 'name' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'name' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'description'; sortReverse = !sortReverse">
+                                        Description
+                                        <span ng-show="sortType == 'description' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'description' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'isSystem'; sortReverse = !sortReverse">
+                                        IsSystem
+                                        <span ng-show="sortType == 'isSystem' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'isSystem' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'isActive'; sortReverse = !sortReverse">
+                                        IsActive
+                                        <span ng-show="sortType == 'isActive' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'isActive' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'isScheduled'; sortReverse = !sortReverse">
+                                        IsScheduled
+                                        <span ng-show="sortType == 'isScheduled' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'isScheduled' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr dir-paginate="scan in scanList | orderBy:sortType:sortReverse | itemsPerPage:15">
+
+                                    <td>{{scan.id}}</td>
+                                    <td>{{scan.name}}</td>
+                                    <td>{{scan.description}}</td>
+                                    <td>{{scan.isSystem}}</td>
+                                    <td>{{scan.isActive}}</td>
+                                    <td>{{scan.isScheduled}}</td>
+                                    <td>
+                                        <i class="fa fa-pencil-square-o icon-edit"
+                                           ng-click="updateScan(scan)"></i>
+                                        <i class="fa fa-trash-o icon-delete"
+                                           ng-click="removeScan(scan)"></i>
+                                        <a ui-sref="scanresult({mode: 'run', scanid:scan.id})"><i class="fa fa-rocket"
+                                           ng-click="runScan(scan)"></i></a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pull-right">
+                            <dir-pagination-controls></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row loading-section clearfix" ng-show="vm.isloading">
+                <h4><i class="fa fa-tasks"></i>
+                    Loading data...</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4 right-panel">
+        <div class="detail-panel">
+            <div class="detail-container">
+                <ul class="nav nav-pills" ng-init="watchVm.activeDetailPanel='details'">
+                    <li class="active"><a>Details</a>
+                    </li>
+
+                </ul>
+                <div class="panel panel-default" id="newSection"
+                     ng-show="detailMode == 'new' || detailMode == 'update'">
+                    <div class="panel-body">
+                        <div>
+                            <h4>Scan Details</h4>
+                        </div>
+                        <div class="detail-sub-section">
+                            <form class="form-vertical" name="scanForm">
+                                <fieldset>
+                                    <div class="form-group" ng-show="detailMode == 'update'">
+                                        <label>ID: {{localScan.id}}</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="scanName" class="control-label">Name</label>
+                                        <i class="fa fa-asterisk indicator-required"></i>
+                                        <div>
+                                            <input type="text" class="form-control" id="scanName" placeholder="Name"
+                                                   ng-model="localScan.name" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="scanDescription" class="control-label">Description</label>
+                                        <div>
+                                            <textarea rows="2" class="form-control" id="scanDescription"
+                                                      placeholder="Description"
+                                                      ng-model="localScan.description"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="scanRule">Rule</label>
+                                        <i class="fa fa-asterisk indicator-required"></i>
+                                        <select class="form-control" id="scanRule" ng-model="localScan.ruleId"
+                                                ng-options="r.id as r.name for r in ruleList" required>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="scanProfitFormula" class="control-label">Profit Formula</label>
+                                        <i class="fa fa-asterisk indicator-required"></i>
+                                        <div>
+                                            <input type="text" class="form-control" id="scanProfitFormula" placeholder="Profit Formula"
+                                                   ng-model="localScan.profitFormula" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="scanStopFormula" class="control-label">Stop Formula</label>
+                                        <i class="fa fa-asterisk indicator-required"></i>
+                                        <div>
+                                            <input type="text" class="form-control" id="scanStopFormula" placeholder="Stop Formula"
+                                                   ng-model="localScan.stopFormula" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="scanStartDate">Start Date</label>
+                                        <i class="fa fa-asterisk indicator-required"></i>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                                                   ng-model="localScan.startDateObj" is-open="startDatePop.opened" id="scanStartDate"
+                                                   datepicker-options="startDateOptions" ng-required="true"
+                                                   close-text="Close"/>
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="startDateOpen()">
+                                                <i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="scanEndDate">End Date</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                                                   ng-model="localScan.endDateObj" is-open="endDatePop.opened" id="scanEndDate"
+                                                   datepicker-options="endDateOptions" ng-required="false"
+                                                   close-text="Close"/>
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="endDateOpen()">
+                                                <i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Type</label>
+                                        <div>
+                                            <label class="radio-inline"><input type="radio" value="Stock" name="scopeType"
+                                                                               ng-model="localScan.scopeType">Share</label>
+                                            <label class="radio-inline"><input type="radio" value="Watch" name="scopeType"
+                                                                               ng-model="localScan.scopeType">Watch List</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" ng-if="localScan.scopeType=='Stock'">
+                                        <label for="scanShareString">Share</label>
+                                        <div angucomplete-alt id="inputShare"
+                                             placeholder="Search share"
+                                             pause="300"
+                                             selected-object="addShareToScope"
+                                             local-data="optionShareList"
+                                             local-search="localSearch"
+                                             title-field="symbol, name"
+                                             description-field="name"
+                                             minlength="1"
+                                             clear-selected="true"
+                                             input-class="form-control form-control-small"
+                                             match-class="highlight" style="font-size: 1em; font-weight: bold">
+                                        </div>
+                                        <div style="margin-top: 10px">
+                                            <textarea rows="2" class="form-control" id="scanShareString"
+                                                      placeholder="Description"
+                                                      ng-model="localScan.shareString"></textarea>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-if="localScan.scopeType=='Watch'">
+                                        <label for="scanWatch">Watch</label>
+                                        <select class="form-control" id="scanWatch" ng-model="localScan.watchList"
+                                                ng-options="m.id as m.name for m in watchList" multiple>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="checkbox-inline">
+                                            <label>
+                                                <input type="checkbox" ng-model="localScan.isSystem">Is System
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="checkbox-inline">
+                                            <label>
+                                                <input type="checkbox" ng-model="localScan.isActive">Is Active
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="checkbox-inline">
+                                            <label>
+                                                <input type="checkbox" ng-model="localScan.isScheduled">Is Scheduled
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div>
+                                            <button type="submit" class="btn btn-primary"
+                                                    ng-click="submitNewScan(scanForm)"
+                                                    ng-disabled="!scanForm.$valid">Submit
+                                            </button>
+                                            <button type="button" class="btn btn-default"
+                                                    ng-click="cancel(scanForm)">Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

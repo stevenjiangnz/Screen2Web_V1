@@ -1,0 +1,237 @@
+<div class="row">
+    <div class="col-sm-8 middle-panel">
+        <div class="row">
+            <div class="row">
+                <div class="col-lg-5"><h1>Manage Rule List</h1></div>
+
+                <div class="col-lg-7 pull-right">
+                    <div class="btn btn-default pull-right" ng-click="createRule()">
+                        Create
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div ng-show="!vm.isloading">
+                    <div>
+                        <div class="pull-right" style="padding-right: 20px" ng-show="ruleList.length > 0"><h4>
+                            Total: {{ruleList.length}}</h4>
+                        </div>
+                        <div class="row table-container">
+                            <table class="table table-bordered table-striped ">
+                                <thead>
+                                <tr>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'id'; sortReverse = !sortReverse">
+                                        ID
+                                        <span ng-show="sortType == 'id' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'id' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                                        Name
+                                        <span ng-show="sortType == 'name' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'name' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'direction'; sortReverse = !sortReverse">
+                                        Direction
+                                        <span ng-show="sortType == 'direction' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'direction' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'type'; sortReverse = !sortReverse">
+                                        Type
+                                        <span ng-show="sortType == 'type' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'type' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'description'; sortReverse = !sortReverse">
+                                        Description
+                                        <span ng-show="sortType == 'description' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'description' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'isSystem'; sortReverse = !sortReverse">
+                                        Is System
+                                        <span ng-show="sortType == 'isSystem' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'isSystem' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr dir-paginate="rule in ruleList | orderBy:sortType:sortReverse | itemsPerPage:15">
+
+                                    <td>{{rule.id}}</td>
+                                    <td>{{rule.name}}</td>
+                                    <td>{{rule.direction}}</td>
+                                    <td>{{rule.type}}</td>
+                                    <td>{{rule.description}}</td>
+                                    <td>{{rule.isSystem}}</td>
+                                    <td>
+                                        <i class="fa fa-pencil-square-o icon-edit"
+                                           ng-click="updateRule(rule)"></i>
+                                        <i class="fa fa-trash-o icon-delete"
+                                           ng-click="removeRule(rule)"></i>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pull-right">
+                            <dir-pagination-controls></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row loading-section clearfix" ng-show="vm.isloading">
+                <h4><i class="fa fa-tasks"></i>
+                    Loading data...</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4 right-panel">
+        <div class="detail-panel">
+            <div class="detail-container">
+                <ul class="nav nav-pills" ng-init="watchVm.activeDetailPanel='details'">
+                    <li class="active"><a>Details</a>
+                    </li>
+
+                </ul>
+                <div class="panel panel-default" id="newSection"
+                     ng-show="detailMode == 'new' || detailMode == 'update'">
+                    <div class="panel-body">
+                        <div>
+                            <h4>Rule Details</h4>
+                        </div>
+                        <div class="detail-sub-section">
+                            <form class="form-vertical" name="ruleForm">
+                                <fieldset>
+                                    <div class="form-group" ng-show="detailMode == 'update'">
+                                        <label>ID: {{localRule.id}}</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ruleName" class="control-label">Name</label>
+                                        <i class="fa fa-asterisk indicator-required"></i>
+                                        <div>
+                                            <input type="text" class="form-control" id="ruleName" placeholder="Name"
+                                                   ng-model="localRule.name" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-init="localRule.direction='long'">
+                                        <label class="control-label">Direction</label>
+                                        <div>
+                                            <label class="radio-inline"><input type="radio" ng-value="'long'"
+                                                                               name="ruleDirection"
+                                                                               ng-model="localRule.direction">Long</label>
+
+                                            <label class="radio-inline"><input type="radio" ng-value="'short'"
+                                                                               name="ruleDirection"
+                                                                               ng-model="localRule.direction">Short</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="ruleDescription" class="control-label">Description</label>
+                                        <div>
+                                            <textarea rows="2" class="form-control" id="ruleDescription" placeholder="Description"
+                                                ng-model="localRule.description"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-init="localRule.type='formula'">
+                                        <label class="control-label">Type</label>
+                                        <div>
+                                            <label class="radio-inline"><input type="radio" ng-value="'formula'"
+                                                                               name="ruleType"
+                                                                               ng-model="localRule.type">Formula</label>
+
+                                            <label class="radio-inline"><input type="radio" ng-value="'assembly'"
+                                                                               name="ruleType"
+                                                                               ng-model="localRule.type">Assembly</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" ng-show="localRule.type=='formula'">
+                                        <label for="ruleFormula" class="control-label">Formula</label>
+                                        <i class="fa fa-asterisk indicator-required"></i>
+                                        <div>
+                                            <textarea rows="2" class="form-control" id="ruleFormula" placeholder="Calculate Formula"
+                                                      ng-model="localRule.formula" ></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" ng-show="localRule.type=='assembly'">
+                                        <label for="ruleCategory">Assembly</label>
+                                        <i class="fa fa-asterisk indicator-required"></i>
+                                        <select class="form-control" id="ruleCategory" ng-model="localRule.assembly"
+                                                >
+                                            <option value="ScanManager_RSI2">RSI2</option>
+                                            <option value="ScanManager_MACD_Long">+MACD</option>
+                                            <option value="ScanManager_MACD_Short">-MACD</option>
+                                            <option value="ScanManager_ADX_Long">+ADX</option>
+                                            <option value="ScanManager_ADX_Short">-ADX</option>
+                                            <option value="ScanManager_Pullback_Long">+Pullback</option>
+                                            <option value="ScanManager_Pullback_Short">-Pullback</option>
+                                            <option value="ScanManager_BreakOut_Long">+Breakout</option>
+                                            <option value="ScanManager_BreakOut_Short">-Breakout</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ruleNote" class="control-label">Note</label>
+                                        <div>
+                                            <textarea rows="2" class="form-control" id="ruleNote" placeholder="Description"
+                                                      ng-model="localRule.note"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="checkbox-inline">
+                                            <label>
+                                                <input type="checkbox" ng-model="localRule.isSystem">Is System Watch
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div>
+                                            <button type="submit" class="btn btn-primary"
+                                                    ng-click="submitRule(ruleForm)"
+                                                    ng-disabled="!ruleForm.$valid">Submit
+                                            </button>
+                                            <button type="button" class="btn btn-default"
+                                                    ng-click="cancel(ruleForm)">Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,162 @@
+<div class="row">
+
+    <div class="col-sm-8 middle-panel">
+        <div class="row">
+            <div class="row">
+                <div class="col-lg-5"><h1>Trading Idea</h1></div>
+
+                <div class="col-lg-7 pull-right">
+                    <div class="btn btn-default pull-right" ng-click="createIdea()">
+                        Create
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <form method="post" name="ideaForm">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading" ng-init="searchExpanded =true">
+                            <span style="font-weight: bold; font-size: 1.1em">Idea Details</span>
+                            <i class="fa fa-minus-square pull-right" ng-show="searchExpanded"
+                               ng-click="searchExpanded=!searchExpanded"></i>
+                            <i class="fa fa-plus-square pull-right" ng-show="!searchExpanded"
+                               ng-click="searchExpanded=!searchExpanded"></i>
+                        </div>
+                        <div class="panel-body" ng-show="searchExpanded">
+                            <fieldset>
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        <input type="text" class="form-control" id="ideaTopic" style="font-size:1.1em"
+                                               placeholder="Idea topic"
+                                               ng-model="localIdea.topic" required>
+
+                                    </div>
+                                    <div class="form-group col-sm-3">
+                                        <div class="form-group" ng-init="localIdea.status='Active'">
+                                            <div style="font-size: 1.5em !important; font-weight: bold">
+                                                <label class="radio-inline"><input type="radio" value="Active"
+                                                                                   name="status"
+                                                                                   ng-model="localIdea.status">Active</label>
+                                                <label class="radio-inline"><input type="radio" value="Archive"
+                                                                                   name="status"
+                                                                                   ng-model="localIdea.status">Archive</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <button type="button" class="btn btn-primary pull-right"
+                                                ng-click="cancel(ideaForm)">Cancel
+                                        </button>
+                                        <button class="btn btn-primary pull-right" ng-click="submitIdea(ideaForm)"
+                                                ng-disabled="!ideaForm.$valid" style="margin-right: 10px">Submit
+                                        </button>
+
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        <select class="form-control" id="ideaType" ng-model="localIdea.type"
+                                                required>
+                                            <option value="Strategy Buy" selected>Strategy Buy</option>
+                                            <option value="Strategy Sell">Strategy Sell</option>
+                                            <option value="Lesson Buy">Lesson Buy</option>
+                                            <option value="Lesson Sell">Lesson Sell</option>
+                                            <option value="General Knowledge">General Knowledge</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-6" ng-show="detailMode == 'update'">
+                                        Last modified {{localIdea.modified | date : 'yyyy-MM-dd, hh:mm a'}}
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+
+                    <textarea ui-tinymce="tinymceOptions" ng-model="localIdea.content"></textarea>
+                </form>
+                <!--{{localIdea | json}}-->
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4 right-panel">
+        <div class="detail-panel">
+            <div class="detail-container">
+                <ul class="nav nav-pills" ng-init="watchVm.activeDetailPanel='details'">
+                    <li class="active"><a>Details</a>
+                    </li>
+
+                </ul>
+                <div class="panel panel-default" id="newSection">
+                    <div class="panel-body">
+                        <div>
+                            <h4>Idea List</h4>
+                        </div>
+                        <div class="detail-sub-section">
+                            <div class="row table-container">
+                                <table class="table table-bordered table-striped ">
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'id'; sortReverse = !sortReverse">
+                                        ID
+                                        <span ng-show="sortType == 'id' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'id' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                        </th>
+                                        <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'topic'; sortReverse = !sortReverse">
+                                        Topic
+                                        <span ng-show="sortType == 'topic' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'topic' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                        </th>
+                                        <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'type'; sortReverse = !sortReverse">
+                                        Type
+                                        <span ng-show="sortType == 'type' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'type' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr dir-paginate="b in ideaList | orderBy:sortType:sortReverse | itemsPerPage:15">
+
+                                        <td>{{b.id}}</td>
+                                        <td>{{b.topic}}</td>
+                                        <td>{{b.type}}</td>
+
+                                        <td>
+                                            <i class="fa fa-pencil-square-o icon-edit"
+                                               ng-click="updateIdea(b)"></i>
+                                            <i class="fa fa-trash-o icon-delete"
+                                               ng-click="removeIdea(b)"></i>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="pull-right">
+                                <dir-pagination-controls></dir-pagination-controls>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,263 @@
+<div>
+    <div class="row">
+        <div class="row">
+            <div class="col-lg-5"><h4>Current Holding</h4></div>
+            <div class="col-lg-7 pull-right"></div>
+        </div>
+        <div>
+            <div ng-show="!vm.isloading">
+                <div>
+                    <div class="pull-right" style="padding-right: 20px" ng-show="positionList.length > 0"><h4>
+                        Total: {{positionList.length}}</h4>
+                    </div>
+                    <div class="row table-container">
+                        <table class="table table-bordered table-striped ">
+                            <thead>
+                            <tr>
+                                <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'id'; sortReverse = !sortReverse">
+                                        ID
+                                        <span ng-show="sortType == 'id' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'id' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'shareId'; sortReverse = !sortReverse">
+                                        Share
+                                        <span ng-show="sortType == 'shareId' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'shareId' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'entryPrice'; sortReverse = !sortReverse">
+                                        Entry
+                                        <span ng-show="sortType == 'entryPrice' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'entryPrice' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'size'; sortReverse = !sortReverse">
+                                        Size
+                                        <span ng-show="sortType == 'size' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'size' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'entryCost'; sortReverse = !sortReverse">
+                                        Cost
+                                        <span ng-show="sortType == 'entryCost' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'entryCost' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'currentPrice'; sortReverse = !sortReverse">
+                                        Price
+                                        <span ng-show="sortType == 'currentPrice' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'currentPrice' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'currentValue'; sortReverse = !sortReverse">
+                                        Value
+                                        <span ng-show="sortType == 'currentValue' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'currentValue' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'currentTradingDate'; sortReverse = !sortReverse">
+                                        CTrade Date
+                                        <span ng-show="sortType == 'currentTradingDate' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'currentTradingDate' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'margin'; sortReverse = !sortReverse">
+                                        Margin
+                                        <span ng-show="sortType == 'margin' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'margin' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'diff'; sortReverse = !sortReverse">
+                                        Diff
+                                        <span ng-show="sortType == 'diff' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'diff' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'diff_V'; sortReverse = !sortReverse">
+                                        Diff_V
+                                        <span ng-show="sortType == 'diff_V' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'diff_V' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'stop'; sortReverse = !sortReverse">
+                                        Stop
+                                        <span ng-show="sortType == 'stop' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'stop' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'limit'; sortReverse = !sortReverse">
+                                        Limit
+                                        <span ng-show="sortType == 'limit' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'limit' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'updateDT'; sortReverse = !sortReverse">
+                                        Updated
+                                        <span ng-show="sortType == 'updateDT' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'updateDT' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th></th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr dir-paginate="b in positionList | orderBy:sortType:sortReverse | itemsPerPage:15">
+                                <td>{{b.id}}</td>
+                                <td>
+                                    <a ui-sref="stock({shareId:b.shareId})" target="sharechart">{{getShare(b.shareId).symbol}}
+                                        ({{getShare(b.shareId).id}})</a>
+                                </td>
+                                <td>{{b.entryPrice | currency}}</td>
+                                <td>{{b.size}}</td>
+                                <td>{{b.entryCost | currency}}</td>
+                                <td>{{b.currentPrice | currency}}</td>
+                                <td>{{b.currentValue | currency}}</td>
+                                <td>{{b.currentTradingDate}}</td>
+                                <td>{{b.margin | currency}}</td>
+                                <td ng-class="{'positive': b.diff > 0, 'negative': b.diff < 0}">{{b.diff | number :
+                                    2}}%
+                                </td>
+                                <td ng-class="{'positive': b.diff_V > 0, 'negative': b.diff_V < 0}">{{b.diff_V |
+                                    currency}}
+                                </td>
+                                <td>{{b.stop | currency}}</td>
+                                <td>{{b.limit | currency}}</td>
+                                <td>{{b.updateDT | date : 'yyyy-MM-dd, hh:mm a'}}</td>
+                                <td>
+                                    <i class="fa fa-pencil-square-o icon-edit"
+                                       ng-click="editPosition(b)"></i>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pull-right">
+                        <dir-pagination-controls></dir-pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--{{transactionList | json}}-->
+        <div class="row loading-section clearfix" ng-show="vm.isloading">
+            <h4><i class="fa fa-tasks"></i>
+                Loading data...</h4>
+        </div>
+
+        <div class="admin-detail-edit" ng-show="localPosition && localPosition.id > 0" style="width: 600px; margin-top:20px">
+            <div>
+                <div class="row detail-sub-title">
+                    <hr>
+                    <h4>Update position - {{localPosition.id}}</h4>
+                    <i class="fa fa-minus-square pull-right" ng-show="positionDetailEditExpanded"
+                       ng-click="positionDetailEditExpanded=!positionDetailEditExpanded"></i>
+                    <i class="fa fa-plus-square pull-right" ng-show="!positionDetailEditExpanded"
+                       ng-click="positionDetailEditExpanded=!positionDetailEditExpanded"></i>
+                </div>
+                <div class="detail-sub-section" ng-show="positionDetailEditExpanded">
+                    <form class="form-vertical" name="positionForm">
+                        <fieldset>
+                            <div class="form-group">
+                                <label for="orderStop" class="control-label">Current Price: {{localPosition.currentPrice | currency}}</label>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="btn btn-primary" ng-init="localPosition.showNextOpen = false" ng-hide="localPosition.showNextOpen" ng-click="localPosition.showNextOpen = true">Peek Next Open</div>
+                                <label ng-show="localPosition.showNextOpen">Next Open: {{localPosition.nextOpen}}</label>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <div class="btn btn-primary" ng-init="localPosition.showNextClose = false" ng-hide="localPosition.showNextClose" ng-click="localPosition.showNextClose = true">Peek Next Close</div>
+                                <label ng-show="localPosition.showNextClose">Next Close: {{localPosition.nextClose}}</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="orderStop" class="control-label">Size: {{localPosition.size}}</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="orderStop" class="control-label">Stop</label>
+                                <div>
+                                    <input type="number" class="form-control" name="orderStop" id="orderStop"
+                                           ng-model="localPosition.stop" ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/"
+                                           step="0.0001"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="orderLimit" class="control-label">Limit</label>
+                                <div>
+                                    <input type="number" class="form-control" name="orderLimit" id="orderLimit"
+                                           ng-model="localPosition.limit" ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/"
+                                           step="0.0001"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div>
+                                    <button type="submit" class="btn btn-primary" ng-click="submitPositionUpdate()"
+                                            ng-disabled="!positionForm.$valid">Submit
+                                    </button>
+                                    <button type="button" class="btn btn-default" ng-click="cancelPositionUpdate()">Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,193 @@
+<div class="row">
+
+    <div class="col-sm-8 middle-panel">
+        <div class="row">
+            <div class="row">
+                <div class="col-lg-5"><h1>Manage Broker</h1></div>
+
+                <div class="col-lg-7 pull-right">
+                    <div class="btn btn-default pull-right" ng-click="createBroker()">
+                        Create
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div ng-show="!vm.isloading">
+                    <div>
+                        <div class="pull-right" style="padding-right: 20px" ng-show="brokerList.length > 0"><h4>
+                            Total: {{brokerList.length}}</h4>
+                        </div>
+                        <div class="row table-container">
+                            <table class="table table-bordered table-striped ">
+                                <thead>
+                                <tr>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'id'; sortReverse = !sortReverse">
+                                        ID
+                                        <span ng-show="sortType == 'id' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'id' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                                        Name
+                                        <span ng-show="sortType == 'name' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'name' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'description'; sortReverse = !sortReverse">
+                                        Description
+                                        <span ng-show="sortType == 'description' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'description' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'shortable'; sortReverse = !sortReverse">
+                                        Shortable
+                                        <span ng-show="sortType == 'shortable' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'shortable' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'isActive'; sortReverse = !sortReverse">
+                                        Is Active
+                                        <span ng-show="sortType == 'isActive' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'isActive' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                     <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr dir-paginate="b in brokerList | orderBy:sortType:sortReverse | itemsPerPage:15">
+
+                                    <td>{{b.id}}</td>
+                                    <td>{{b.name}}</td>
+                                    <td>{{b.description}}</td>
+                                    <td>{{b.shortable}}</td>
+                                    <td>{{b.isActive}}</td>
+                                    <td>
+                                        <i class="fa fa-pencil-square-o icon-edit"
+                                           ng-click="updateBroker(b)"></i>
+                                        <!--<i class="fa fa-trash-o icon-delete"-->
+                                           <!--ng-click="removeBroker(b)"></i>-->
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pull-right">
+                            <dir-pagination-controls></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row loading-section clearfix" ng-show="vm.isloading">
+                <h4><i class="fa fa-tasks"></i>
+                    Loading data...</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4 right-panel">
+        <div class="detail-panel">
+            <div class="detail-container">
+                <ul class="nav nav-pills" ng-init="brokerVM.activeDetailPanel='details'">
+                    <li class="active"><a>Details</a>
+                    </li>
+
+                </ul>
+                <div class="panel panel-default" id="newSection"
+                     ng-show="detailMode == 'new' || detailMode == 'update'">
+                    <div class="panel-body">
+                        <div>
+                            <h4>Broker Details</h4>
+                        </div>
+                        <div class="detail-sub-section">
+                            <form class="form-vertical" name="brokerForm">
+                                <fieldset>
+                                    <div class="form-group" ng-show="detailMode == 'update'">
+                                        <label>ID: {{localBroker.id}}</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="brokerName" class="control-label">Name</label>
+                                        <i class="fa fa-asterisk indicator-required"></i>
+                                        <div>
+                                            <input type="text" class="form-control" id="brokerName" placeholder="Name"
+                                                   ng-model="localBroker.name" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="brokerDescription" class="control-label">Description</label>
+                                        <div>
+                                            <textarea rows="2" class="form-control" id="brokerDescription" placeholder="Description"
+                                                      ng-model="localBroker.description"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="brokerMinFee" class="control-label">Min Fee</label>
+                                        <i class="fa fa-asterisk indicator-required"></i>
+                                        <div>
+                                            <input type="number" class="form-control" id="brokerMinFee" placeholder="Min Fee"
+                                                   min="0" max="100" ng-model="localBroker.minFee" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                    <label for="brokerFeeRate" class="control-label">Fee Rate</label>
+                                    <i class="fa fa-asterisk indicator-required"></i>
+                                    <div>
+                                        <input type="number" class="form-control" name="brokerFeeRate" id="brokerFeeRate"
+                                               placeholder="0.10" ng-model="localBroker.feeRate" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" required />
+                                    </div>
+                                </div>
+                                    <div class="form-group" ng-init="localBroker.shortable = false">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" ng-model="localBroker.shortable">Is Shortable
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-init="localBroker.isActive = true">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" ng-model="localBroker.isActive">Is Active
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div>
+                                            <button type="submit" class="btn btn-primary"
+                                                    ng-click="submitBroker(brokerForm)"
+                                                    ng-disabled="!brokerForm.$valid">Submit
+                                            </button>
+                                            <button type="button" class="btn btn-default"
+                                                    ng-click="cancel(brokerForm)">Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

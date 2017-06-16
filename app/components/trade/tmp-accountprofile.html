@@ -1,0 +1,73 @@
+<div>
+    <div class="row">
+        <div class="row">
+            <div class="col-lg-5"><h4>Account Profile</h4></div>
+            <div class="col-lg-7"><h4 class="pull-right">Trading Date: {{accountSummary.balance.tradingDate}}</h4></div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-lg-4">
+                <h4>Fund Amount: <span class="label label-default">{{accountSummary.balance.fundAmount | currency}}</span></h4>
+            </div>
+            <div class="col-lg-4">
+                <h4>Balance: <span class="label label-default">{{accountSummary.balance.totalBalance | currency}}</span></h4>
+            </div>
+            <div class="col-lg-4">
+                <h4>Available Fund: <span class="label label-default">{{accountSummary.balance.availableFund | currency}}</span></h4>
+            </div>
+            <div class="col-lg-4">
+                <h4>Position Value: <span class="label label-default">{{accountSummary.balance.positionValue | currency}}</span></h4>
+            </div>
+            <div class="col-lg-4">
+                <h4>Reserve: <span class="label label-default">{{accountSummary.balance.reserve | currency}}</span></h4>
+            </div>
+            <div class="col-lg-4">
+                <h4>Margin: <span class="label label-default">{{accountSummary.balance.margin | currency}}</span></h4>
+            </div>
+            <div class="col-lg-4">
+                <h4>Fee: <span class="label label-default">{{accountSummary.balance.feeSum | currency}}</span></h4>
+            </div>
+            <div class="col-lg-4">
+                <h4>P / L: <span class="label label-default" ng-class="{'positive': accountSummary.balance.pl > 0, 'negative': accountSummary.balance.pl < 0}">{{accountSummary.balance.pl | currency}}</span></h4>
+            </div>
+            <div class="col-lg-4">
+                <h4>P / L Per: <span class="label label-default" ng-class="{'positive': accountSummary.balance.pl > 0, 'negative': accountSummary.balance.pl < 0}">{{accountSummary.balance.plPercent | number : 2}}%</span></h4>
+            </div>
+        </div>
+        <hr>
+        <div class="row" ng-show="accountSummary.openOrders.length > 0">
+            <div class="col-lg-4">
+                <h4>Open Orders: <span class="label label-default">{{accountSummary.openOrders.length}}</span></h4>
+            </div>
+            <div class="col-lg-4">
+                <h4>Order Value: <span class="label label-default">{{accountSummary.orderValueSum | currency}}</span></h4>
+            </div>
+            <div class="col-lg-4">
+                <h4>Reserve: <span class="label label-default">{{accountSummary.orderReserveSum | currency}}</span></h4>
+            </div>
+            <div class="col-lg-4">
+                <h4>Fee: <span class="label label-default">{{accountSummary.orderFeeSum | currency}}</span></h4>
+            </div>
+        </div>
+        <hr>
+        <div class="row" ng-show="accountSummary.currentPositions.length > 0">
+            <div class="col-lg-4">
+                <h4>Positions: <span class="label label-default">{{accountSummary.currentPositions.length}}</span></h4>
+            </div>
+            <div class="col-lg-4">
+                <h4>Entry Cost: <span class="label label-default">{{accountSummary.positionEntrySum | currency}}</span></h4>
+            </div>
+            <div class="col-lg-4">
+                <h4>Current Value: <span class="label label-default">{{accountSummary.positionValueSum | currency}}</span></h4>
+            </div>
+
+            <div class="col-lg-4">
+                <h4>Diff Value: <span class="label label-default" ng-class="{'positive': accountSummary.positionDiffSum > 0, 'negative': accountSummary.positionDiffSum < 0}">{{accountSummary.positionDiffSum | currency}}</span></h4>
+            </div>
+            <div class="col-lg-4">
+                <h4>Diff Per: <span class="label label-default" ng-class="{'positive': accountSummary.positionDiffSum > 0, 'negative': accountSummary.positionDiffSum < 0}">{{accountSummary.positionDiffSumPercent | number :2}}%</span></h4>
+            </div>
+        </div>
+        <!--{{accountSummary | json}}-->
+    </div>
+</div>

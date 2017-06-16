@@ -1,0 +1,156 @@
+<div class="panel panel-default" id="newSection">
+    <div class="panel-body">
+        <div>
+            <h4>Order Details</h4>
+        </div>
+        <div class="detail-sub-section">
+            <form class="form-vertical" name="orderForm">
+                <fieldset>
+                    <div class="form-group" ng-show="mode == 'update'">
+                        <label>ID: {{localOrder.id}}</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="orderAccount">Account</label>
+                        <i class="fa fa-asterisk indicator-required"></i>
+                        <select class="form-control" id="orderAccount" ng-model="localOrder.accountId"
+                                ng-options="m.id as m.name for m in optionAccountList" required>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputShare">Share</label>
+                        <i class="fa fa-asterisk indicator-required"></i>
+                        <div angucomplete-alt id="inputShare"
+                             placeholder="Search share"
+                             pause="300"
+                             selected-object="addShareToScope"
+                             local-data="optionShareList"
+                             local-search="localSearch"
+                             title-field="symbol, name"
+                             description-field="name"
+                             minlength="1"
+                             input-class="form-control form-control-small"
+                             field-required="true"
+                             input-name="shareInput"
+                             match-class="highlight" style="font-size: 1em; font-weight: bold">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="tradingOrderDate" class="control-label">TradingDate</label>
+                        <i class="fa fa-asterisk indicator-required"></i>
+                        <div>
+                            <input type="text" class="form-control" id="tradingOrderDate" placeholder="Trading Date"
+                                   ng-model="localOrder.tradingOrderDate" required>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="selectedShare">
+                        <label>Latest Price: {{localOrder.latestPrice}}</label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <label>Latest TradingDate: {{localOrder.latestTradingDate}}</label>
+                    </div>
+                    <div class="form-group" ng-show="selectedShare">
+                        <div class="btn btn-primary" ng-init="localOrder.showNextOpen = false" ng-hide="localOrder.showNextOpen" ng-click="localOrder.showNextOpen = true">Peek Next Open</div>
+                        <label ng-show="localOrder.showNextOpen">Next Open: {{localOrder.nextOpen}}</label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <div class="btn btn-primary" ng-init="localOrder.showNextClose = false" ng-hide="localOrder.showNextClose" ng-click="localOrder.showNextClose = true">Peek Next Close</div>
+                        <label ng-show="localOrder.showNextClose">Next Close: {{localOrder.nextClose}}</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Direction</label>
+                        <div>
+                            <label class="radio-inline"><input type="radio" value="Long" name="orderDirection"
+                                                               ng-model="localOrder.direction">Long</label>
+                            <label class="radio-inline"><input type="radio" value="Short" name="orderDirection"
+                                                               ng-model="localOrder.direction">Short</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="orderPrice" class="control-label">Price</label>
+                        <i class="fa fa-asterisk indicator-required"></i>
+                        <div>
+                            <input type="number" class="form-control" name="orderPrice" id="orderPrice"
+                                   ng-model="localOrder.orderPrice" ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" step="0.0001"
+                                   required/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="orderSize" class="control-label">Size</label>
+                        <i class="fa fa-asterisk indicator-required"></i>
+                        <div>
+                            <input type="number" class="form-control" id="orderSize" placeholder="Order size"
+                                   min="0" ng-model="localOrder.size" required>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="localOrder.orderType">
+                        <label> Order Type: {{localOrder.orderType}}</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="orderStop" class="control-label">Stop</label>
+                        <div>
+                            <input type="number" class="form-control" name="orderStop" id="orderStop"
+                                   ng-model="localOrder.stop" ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/"
+                                   step="0.0001"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="orderLimit" class="control-label">Limit</label>
+                        <div>
+                            <input type="number" class="form-control" name="orderLimit" id="orderLimit"
+                                   ng-model="localOrder.limit" ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/"
+                                   step="0.0001"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="orderReason">Reason</label>
+                        <!--<i class="fa fa-asterisk indicator-required"></i>-->
+                        <select class="form-control" id="orderReason" ng-model="localOrder.reason">
+                            <option value="MACD_WR">MACD WR</option>
+                            <option value="ADX_Direction">ADX Direction</option>
+                            <option value="ADX_Pullback">ADX Pullback</option>
+                            <option value="ADX_Breakout">ADX Breakout</option>
+                            <option value="Candle_Pattern">Candle Pattern</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="orderNote" class="control-label">Note</label>
+                        <div>
+                             <textarea rows="2" class="form-control" id="orderNote"
+                                       placeholder="Note"
+                                       ng-model="localOrder.note"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="mode == 'update'">
+                        <label class="control-label">Status: </label>
+                        <span>
+                            <label class="radio-inline"><input type="radio" value="Open" name="orderStatus"
+                                                               ng-model="localOrder.status" ng-disabled="localOrder.status!='Open'">Open</label>
+                            <label class="radio-inline"><input type="radio" value="Withdrawn" name="orderStatus"
+                                                               ng-model="localOrder.status" ng-disabled="localOrder.status!='Open'">Withdrawn</label>
+                            <label class="radio-inline"><input type="radio" value="Fulfilled" name="orderStatus"
+                                                               ng-model="localOrder.status" disabled>Fulfilled</label>
+                        </span>
+                    </div>
+                    <!--{{localOrder | json}}-->
+                    <div class="form-group" ng-show="mode == 'update'">
+                        <label>Process til: {{localOrder.processedTradingDate}}</label>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <button type="submit" class="btn btn-primary"
+                                    ng-click="submitOrder(orderForm)"
+                                    ng-disabled="!orderForm.$valid || localOrder.status=='Fulfilled'">Submit
+                            </button>
+                            <button type="button" class="btn btn-default"
+                                    ng-click="cancel(orderForm)">Cancel
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

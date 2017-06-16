@@ -1,0 +1,52 @@
+<div>
+    <h4>ShareId: {{noteInput.shareId}}</h4>
+    <div class="row detail-sub-title" ng-init="noteFormExpanded=true">
+        <label>New Note - {{noteInput.tradingDate}}</label>
+        <i class="fa fa-minus-square pull-right" ng-show="noteFormExpanded"
+           ng-click="noteFormExpanded=!noteFormExpanded"></i>
+        <i class="fa fa-plus-square pull-right" ng-show="!noteFormExpanded"
+           ng-click="noteFormExpanded=!noteFormExpanded"></i>
+    </div>
+    <div class="detail-sub-section" ng-show="noteFormExpanded">
+        <form class="form-vertical" name="shareNoteForm" role="form">
+            <fieldset>
+                <div class="form-group">
+                    <label for="comment">Comment</label>
+                    <div>
+                        <textarea class="form-control" rows="3" id="comment" name="comment"
+                                  ng-model="comment"
+                                  required></textarea>
+                        <span class="validation-error"
+                              ng-show="shareNoteForm.comment.$dirty && shareNoteForm.comment.$invalid">The name is required.</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <button type="submit" class="btn btn-primary"
+                                ng-disabled="shareNoteForm.$invalid"
+                                ng-click="addNote(shareNoteForm)">
+                            Submit
+                        </button>
+                        <button type="button" class="btn btn-default" ng-click="cancelNote(shareNoteForm)">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+    <div class="row detail-sub-title">
+        <label>Existing Note ({{noteList.length}})</label>
+    </div>
+    <div class="detail-sub-section">
+        <div class="list-group">
+            <div class="list-group-item" ng-repeat="n in noteList">
+                <h4 class="list-group-item-heading" style="white-space:pre-wrap">{{n.comment}}</h4>
+                <div style="font-size: 0.9em">{{n.create}} by {{n.userName}} <span
+                        class="pull-right note-delete fa fa-times"
+                        ng-click="deleteNote(n)"></span></div>
+            </div>
+        </div>
+    </div>
+</div>

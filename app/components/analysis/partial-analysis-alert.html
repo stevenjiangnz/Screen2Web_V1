@@ -1,0 +1,113 @@
+<div>
+    <h4>Share Id: {{currentShare.id}}</h4>
+    <div class="row detail-sub-title" ng-init="alertFormExpanded=true">
+        <label>Alert Details <span class="btn btn-sm btn-primary" ng-click="createAlert(alertForm)">
+            Create
+        </span></label>
+        <i class="fa fa-minus-square pull-right" ng-show="alertFormExpanded"
+           ng-click="alertFormExpanded=!alertFormExpanded"></i>
+        <i class="fa fa-plus-square pull-right" ng-show="!alertFormExpanded"
+           ng-click="alertFormExpanded=!alertFormExpanded"></i>
+    </div>
+
+    <div class="detail-sub-section" ng-show="alertFormExpanded">
+        <form class="form-vertical" name="alertForm" role="form">
+            <fieldset>
+                <div class="form-group" ng-show="detailMode == 'update'">
+                    <label>ID: {{localAlert.id}}</label>
+                </div>
+                <div class="form-group">
+                    <label>Share</label>
+                    <div>
+                        <div angucomplete-alt id="inputShare"
+                             placeholder="Search share"
+                             pause="300"
+                             selected-object="selectedShare"
+                             local-data="optionShareList"
+                             local-search="localSearch"
+                             title-field="symbol, name"
+                             description-field="name"
+                             field-required="true"
+                             input-name="shareSelector"
+                             minlength="1"
+                             input-class="form-control form-control-small"
+                             match-class="highlight" style="font-size: 1.15em; font-weight: bold">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="alertMessage">Message</label>
+                    <div>
+                        <input type="text" class="form-control" id="alertMessage" name="alertMessage"
+                               placeholder="Message"
+                               ng-model="localAlert.message">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="alertFormula">Formula</label>
+                    <div>
+                        <textarea class="form-control" rows="3" id="alertFormula" name="alertFormula"
+                                  ng-model="localAlert.formula"
+                                  required></textarea>
+                        <span class="validation-error"
+                              ng-show="alertForm.alertFormula.$dirty && alertForm.alertFormula.$invalid">The formula is required.</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox-inline">
+                        <label>
+                            <input type="checkbox" ng-model="localAlert.isActive">Is Active
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <button type="button" class="btn btn-primary"
+                                ng-disabled="alertForm.$invalid"
+                                ng-click="submitAlert(alertForm)">
+                            Submit
+                        </button>
+
+                        <button type="button" class="btn btn-default" ng-click="cancel(alertForm)">
+                            Cancel
+                        </button>
+
+                        <button type="button" class="btn btn-primary pull-right" ng-show="detailMode == 'update'"
+                                ng-click="verifyAlert(alertForm)">
+                            Verify
+                        </button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+    <div class="row detail-sub-title" ng-show="verifyResult">
+        <label>Verification Result</label>
+    </div>
+    <div class="detail-sub-section" ng-show="verifyResult">
+        <h4 ng-show="verifyResult.isSuccess">Is Match: {{verifyResult.isMatch}} </h4>
+        <h4 ng-show="!verifyResult.isSuccess">Error: {{verifyResult.errorMessage}} </h4>
+    </div>
+<!--
+    {{selectedShare | json}}
+    {{localAlert | json}}-->
+    <div class="row detail-sub-title">
+        <label>Existing Alerts ({{alertList.length}})</label>
+
+    </div>
+    <div class="detail-sub-section">
+        <div class="list-group">
+            <div class="list-group-item" ng-repeat="n in alertList">
+                <i class="pull-right fa fa-trash-o icon-delete"
+                   ng-click="deleteAlert(n)"></i>
+                <i class="pull-right fa fa-pencil-square-o icon-edit"
+                   ng-click="updateAlert(n)"></i>
+
+                <h5 class="list-group-item-heading" ng-class="{'item-active': n.isActive}">({{localAlert.isActive}}) {{n.message}}</h5>
+                <div style="font-size: 1em">{{n.formula}}</div>
+            </div>
+        </div>
+    </div>
+</div>

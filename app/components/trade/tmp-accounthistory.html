@@ -1,0 +1,179 @@
+<div>
+    <div class="row">
+        <div >
+            <div class="col-lg-5"><h2>Account Journey</h2></div>
+            <div class="col-lg-7 pull-right">
+                <select class="pull-right page-size-selector" name="itemSize" ng-model="itemSize">
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                    <option value="-1">All</option>
+                </select>
+            </div>
+        </div>
+        <div>
+            <div ng-show="!vm.isloading">
+                <div>
+                    <div class="pull-right" style="padding-right: 20px" ng-show="journeyList.length > 0"><h4>
+                        Total: {{journeyList.length}}</h4>
+                    </div>
+                    <div class="row table-container">
+                        <table class="table table-bordered table-striped ">
+                            <thead>
+                            <tr>
+                                <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'id'; sortReverse = !sortReverse">
+                                        ID
+                                        <span ng-show="sortType == 'id' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'id' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'fundAmount'; sortReverse = !sortReverse">
+                                        Fund
+                                        <span ng-show="sortType == 'fundAmount' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'fundAmount' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'totalBalance'; sortReverse = !sortReverse">
+                                        Balance
+                                        <span ng-show="sortType == 'totalBalance' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'totalBalance' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'availableFund'; sortReverse = !sortReverse">
+                                        Available Fund
+                                        <span ng-show="sortType == 'availableFund' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'availableFund' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'margin'; sortReverse = !sortReverse">
+                                        Margin
+                                        <span ng-show="sortType == 'margin' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'margin' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'positionValue'; sortReverse = !sortReverse">
+                                        Position
+                                        <span ng-show="sortType == 'positionValue' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'positionValue' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'reserve'; sortReverse = !sortReverse">
+                                        Reserve
+                                        <span ng-show="sortType == 'reserve' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'reserve' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'feeSum'; sortReverse = !sortReverse">
+                                        Fee
+                                        <span ng-show="sortType == 'feeSum' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'feeSum' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'action'; sortReverse = !sortReverse">
+                                        Action
+                                        <span ng-show="sortType == 'action' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'action' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'tradingDate'; sortReverse = !sortReverse">
+                                        Trading Date
+                                        <span ng-show="sortType == 'tradingDate' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'tradingDate' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'refId'; sortReverse = !sortReverse">
+                                        Ref ID
+                                        <span ng-show="sortType == 'refId' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'refId' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                                <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'updateDT'; sortReverse = !sortReverse">
+                                        Updated
+                                        <span ng-show="sortType == 'updateDT' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'updateDT' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr dir-paginate="b in journeyList | orderBy:sortType:sortReverse | itemsPerPage:15">
+
+                                <td>{{b.id}}</td>
+                                <td>{{b.fundAmount | currency}}</td>
+                                <td>{{b.totalBalance | currency}}</td>
+                                <td>{{b.availableFund | currency}}</td>
+                                <td>{{b.margin | currency}}</td>
+                                <td>{{b.positionValue | currency}}</td>
+                                <td>{{b.reserve | currency}}</td>
+                                <td>{{b.feeSum | currency}}</td>
+
+                                <td>{{b.action}}</td>
+                                <td>{{b.tradingDate}}</td>
+                                <td>{{b.refId}}</td>
+                                <td>{{b.updateDT | date : 'yyyy-MM-dd, hh:mm a'}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pull-right">
+                        <dir-pagination-controls></dir-pagination-controls>
+                    </div>
+
+                    <!--{{journeyList | json}}-->
+                </div>
+            </div>
+        </div>
+
+        <div class="row loading-section clearfix" ng-show="vm.isloading">
+            <h4><i class="fa fa-tasks"></i>
+                Loading data...</h4>
+        </div>
+    </div>
+</div>

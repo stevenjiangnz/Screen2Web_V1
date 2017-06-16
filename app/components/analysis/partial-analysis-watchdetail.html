@@ -1,0 +1,129 @@
+<div class="row">
+    <div class="col-sm-8 main-panel">
+
+        <div>
+            <div>
+                <div class="col-lg-5">
+                    <h1>Watch List</h1>
+                    <h2>{{watchInfo.name}}</h2>
+                </div>
+                <div class="col-lg-7 pull-right">
+
+                </div>
+                <div class="col-lg-12">
+                    <div>
+                        <div class="pull-right" style="padding-right: 20px" ng-show="watchshareList.length > 0"><h4>
+                            Total: {{watchshareList.length}}</h4>
+                        </div>
+                        <div class="row table-container">
+                            <table class="table table-bordered table-striped ">
+                                <thead>
+                                <tr>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'id'; sortReverse = !sortReverse">
+                                        ID
+                                        <span ng-show="sortType == 'id' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'id' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'symbol'; sortReverse = !sortReverse">
+                                        Symbol
+                                        <span ng-show="sortType == 'symbol' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'symbol' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                                        Name
+                                        <span ng-show="sortType == 'name' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'name' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                        </th>
+                                    <th>
+                                       <span class="sortable-header"
+                                              ng-click="sortType = 'sector'; sortReverse = !sortReverse">
+                                        Sector
+                                        <span ng-show="sortType == 'sector' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'sector' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                        </th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr dir-paginate="wShare in watchshareList | orderBy:sortType:sortReverse | itemsPerPage:15">
+
+                                    <td>{{wShare.id}}</td>
+                                    <td>{{wShare.symbol}}</td>
+                                    <td>{{wShare.name}}</td>
+                                    <td>{{wShare.sector}}</td>
+                                    <td>
+                                        <i class="fa fa-trash-o icon-delete"
+                                           ng-click="removeShareFromWatch(wShare)"></i>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pull-right">
+                            <dir-pagination-controls></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4 right-panel">
+
+        <div class="detail-panel">
+            <div class="detail-container">
+                <ul class="nav nav-pills" ng-init="watchVm.activeDetailPanel='details'">
+                    <li class="active"><a>Details</a>
+                    </li>
+
+                </ul>
+                <div class="panel panel-default " ng-if="watchVm.activeDetailPanel=='details'">
+                    <div class="panel-body">
+                        <div>
+                            <h4>Add new Share</h4>
+                        </div>
+
+                        <div class="detail-sub-section" style="margin-top: 20px">
+                            <div angucomplete-alt id="inputShare"
+                                 placeholder="Search share"
+                                 pause="300"
+                                 selected-object="selectedShare"
+                                 local-data="optionShareList"
+                                 local-search="localSearch"
+                                 title-field="symbol, name"
+                                 description-field="name"
+                                 minlength="1"
+                                 input-class="form-control form-control-small"
+                                 match-class="highlight" style="font-size: 1.15em; font-weight: bold">
+                            </div>
+
+                        </div>
+                        <div class="btn btn-primary pull-right" style="margin: 30px 15px"
+                             ng-disabled="!selectedShare"
+                             ng-click="addShareToWatch(selectedShare)">Add to Watch List
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

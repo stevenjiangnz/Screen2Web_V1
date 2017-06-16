@@ -1,0 +1,186 @@
+<div class="row">
+    <div class="col-sm-8 middle-panel">
+        <div class="row">
+            <div class="row">
+                <div class="col-lg-5"><h1>Manage Records</h1></div>
+
+                <div class="col-lg-7 pull-right">
+                    <div class="btn btn-default pull-right" ng-click="createRecord()">
+                        Create
+                    </div>
+                 </div>
+            </div>
+            <div>
+                <div ng-show="!vm.isloading">
+                    <div class="pull-left">
+                        <select class="pull-right page-size-selector" name="itemSize" ng-model="itemSize">
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                            <option value="-1">All</option>
+                        </select>
+                    </div>
+                    <div>
+                        <div class="pull-right" style="padding-right: 20px" ng-show="recordList.length > 0"><h4>
+                            Total: {{recordList.length}}</h4>
+                        </div>
+                        <div class="row table-container">
+                            <table class="table table-bordered table-striped ">
+                                <thead>
+                                <tr>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'id'; sortReverse = !sortReverse">
+                                        ID
+                                        <span ng-show="sortType == 'id' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'id' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'tradingDate'; sortReverse = !sortReverse">
+                                        Trading Date
+                                        <span ng-show="sortType == 'tradingDate' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'tradingDate' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'title'; sortReverse = !sortReverse">
+                                        Title
+                                        <span ng-show="sortType == 'title' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'title' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'type'; sortReverse = !sortReverse">
+                                        Type
+                                        <span ng-show="sortType == 'type' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'type' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'fileName'; sortReverse = !sortReverse">
+                                        File Name
+                                        <span ng-show="sortType == 'fileName' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'fileName' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr dir-paginate="record in recordList | orderBy:sortType:sortReverse | itemsPerPage:15">
+
+                                    <td>{{record.id}}</td>
+                                    <td>{{record.tradingDate}}</td>
+                                    <td>{{record.title}}</td>
+                                    <td>{{record.type}}</td>
+                                    <td>{{record.fileName}}</td>
+                                    <td>
+                                        <i class="fa fa-trash-o icon-delete"
+                                           ng-click="removeRecord(record)"></i>
+                                        <i class="fa fa-download"
+                                           ng-click="downloadRecord(record)"></i>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pull-right">
+                            <dir-pagination-controls></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row loading-section clearfix" ng-show="vm.isloading">
+                <h4><i class="fa fa-tasks"></i>
+                    Loading data...</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4 right-panel">
+        <div class="detail-panel">
+            <div class="detail-container">
+                <ul class="nav nav-pills" ng-init="watchVm.activeDetailPanel='details'">
+                    <li class="active"><a>Details</a>
+                    </li>
+
+                </ul>
+                <div class="panel panel-default" id="newSection"
+                     ng-show="detailMode == 'new'">
+                    <div class="panel-body">
+                        <div>
+                            <h4>Record Details</h4>
+                        </div>
+                        <div class="detail-sub-section">
+                            <form class="form-vertical" name="recordForm" enctype="multipart/form-data">
+                                <fieldset>
+                                    <div class="form-group">
+                                        <label for="tradingDate" class="control-label">TradingDate</label>
+                                        <i class="fa fa-asterisk indicator-required"></i>
+                                        <div>
+                                            <input type="number" class="form-control" id="tradingDate" placeholder="Trading Date"
+                                                   ng-model="localRecord.tradingDate" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="title" class="control-label">Title</label>
+                                        <i class="fa fa-asterisk indicator-required"></i>
+                                        <div>
+                                            <input type="text" class="form-control" id="title" placeholder="Title"
+                                                   ng-model="localRecord.title" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="recordType">Type</label>
+                                        <i class="fa fa-asterisk indicator-required"></i>
+                                        <select class="form-control" id="recordType" ng-model="localRecord.type" required>
+                                            <option value="Plan">Plan</option>
+                                            <option value="Journey">Journey</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <br>Photo:
+                                        <input type="file" ngf-select ng-model="localRecord.picFile" name="file"
+                                               ngf-max-size="120MB" required
+                                               ngf-model-invalid="errorFile">
+                                        <i ng-show="recordForm.file.$error.required">*required</i><br>
+                                        <i ng-show="recordForm.file.$error.maxSize">File too large
+                                            {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
+                                    </div>
+                                    <div class="form-group">
+                                        <div>
+                                            <button type="submit" class="btn btn-primary"
+                                                    ng-click="submitRecord(recordForm)"
+                                                    ng-disabled="!recordForm.$valid">Submit
+                                            </button>
+                                            <button type="button" class="btn btn-default"
+                                                    ng-click="cancel(recordForm)">Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,224 @@
+<div class="row">
+
+    <div class="col-sm-8 middle-panel">
+        <div class="row">
+            <div class="row">
+                <div class="col-lg-5"><h1>Manage Zone List</h1></div>
+
+                <div class="col-lg-7 pull-right">
+                    <div class="btn btn-default pull-right" ng-click="createZone()">
+                        Create
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div ng-show="!vm.isloading">
+                    <div>
+                        <div class="pull-right" style="padding-right: 20px" ng-show="zoneList.length > 0"><h4>
+                            Total: {{zoneList.length}}</h4>
+                        </div>
+                        <div class="row table-container">
+                            <table class="table table-bordered table-striped ">
+                                <thead>
+                                <tr>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'id'; sortReverse = !sortReverse">
+                                        ID
+                                        <span ng-show="sortType == 'id' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'id' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                                        Name
+                                        <span ng-show="sortType == 'name' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'name' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'startDate'; sortReverse = !sortReverse">
+                                        Start Date
+                                        <span ng-show="sortType == 'startDate' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'startDate' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'tradingDate'; sortReverse = !sortReverse">
+                                        Trading Date
+                                        <span ng-show="sortType == 'tradingDate' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'tradingDate' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'endDate'; sortReverse = !sortReverse">
+                                        End Date
+                                        <span ng-show="sortType == 'endDate' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'endDate' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'status'; sortReverse = !sortReverse">
+                                        Status
+                                        <span ng-show="sortType == 'status' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'status' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr dir-paginate="z in zoneList | orderBy:sortType:sortReverse | itemsPerPage:15">
+
+                                    <td>{{z.id}}</td>
+                                    <td>{{z.name}}</td>
+                                    <td>{{getDateInt(z.startDate)}}</td>
+                                    <td>{{z.tradingDate}}</td>
+                                    <td>{{getDateInt(z.endDate)}}</td>
+                                    <td>{{z.status}}</td>
+                                    <td>
+                                        <i class="fa fa-pencil-square-o icon-edit"
+                                           ng-click="updateZone(z)"></i>
+                                        <!--<i class="fa fa-trash-o icon-delete"-->
+                                           <!--ng-click="removeZone(z)"></i>-->
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pull-right">
+                            <dir-pagination-controls></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row loading-section clearfix" ng-show="vm.isloading">
+                <h4><i class="fa fa-tasks"></i>
+                    Loading data...</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4 right-panel">
+        <div class="detail-panel">
+            <div class="detail-container">
+                <ul class="nav nav-pills" ng-init="zoneVM.activeDetailPanel='details'">
+                    <li class="active"><a>Details</a>
+                    </li>
+
+                </ul>
+                <div class="panel panel-default" id="newSection"
+                     ng-show="detailMode == 'new' || detailMode == 'update'">
+                    <div class="panel-body">
+                        <div>
+                            <h4>Zone Details</h4>
+                        </div>
+                        <div class="detail-sub-section">
+                            <form class="form-vertical" name="zoneForm">
+                                <fieldset>
+                                    <div class="form-group" ng-show="detailMode == 'update'">
+                                        <label>ID: {{localZone.id}}</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="zoneName" class="control-label">Name</label>
+                                        <i class="fa fa-asterisk indicator-required"></i>
+                                        <div>
+                                            <input type="text" class="form-control" id="zoneName" placeholder="Name"
+                                                   ng-model="localZone.name" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="zoneDescription" class="control-label">Description</label>
+                                        <div>
+                                            <textarea rows="2" class="form-control" id="zoneDescription" placeholder="Description"
+                                                      ng-model="localZone.description"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="zoneStartDate">Start Date</label>
+                                        <i class="fa fa-asterisk indicator-required"></i>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                                                   ng-model="localZone.startDateObj" is-open="startDatePop.opened" id="zoneStartDate"
+                                                   datepicker-options="startDateOptions" ng-required="true"
+                                                   close-text="Close"/>
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="startDateOpen()">
+                                                <i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="zoneEndDate">End Date</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                                                   ng-model="localZone.endDateObj" is-open="endDatePop.opened" id="zoneEndDate"
+                                                   datepicker-options="endDateOptions" ng-required="false"
+                                                   close-text="Close"/>
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="endDateOpen()">
+                                                <i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" ng-show="detailMode == 'update'">
+                                        <label for="zoneTradingDate" class="control-label">Trading Date</label>
+                                        <div>
+                                            <input type="text" class="form-control" id="zoneTradingDate" placeholder="Trading Date"
+                                                   ng-model="localZone.tradingDate">
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-init="localZone.status='Active'">
+                                        <label class="control-label">Status</label>
+                                        <div>
+                                            <label class="radio-inline"><input type="radio" value="Active" name="status"
+                                                                               ng-model="localZone.status">Active</label>
+                                            <label class="radio-inline"><input type="radio" value="Inactive" name="status"
+                                                                               ng-model="localZone.status">Inactive</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="zoneNote" class="control-label">Note</label>
+                                        <div>
+                                            <textarea rows="2" class="form-control" id="zoneNote" placeholder="Note"
+                                                      ng-model="localZone.note"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div>
+                                            <button type="submit" class="btn btn-primary"
+                                                    ng-click="submitNewZone(zoneForm)"
+                                                    ng-disabled="!zoneForm.$valid">Submit
+                                            </button>
+                                            <button type="button" class="btn btn-default"
+                                                    ng-click="cancel(zoneForm)">Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

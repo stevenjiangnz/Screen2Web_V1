@@ -1,0 +1,22 @@
+<div class="row analysis-page">
+    <div class="col-sm-2 admin-left-panel">
+{{vm.shareNode}}
+        <tree-nav share-list="vm.shareList" on-select="vm.shareNode" control="vm.treeControl">
+
+        </tree-nav>
+    </div>
+
+    <div class="col-sm-7">
+        <div class="" style="margin-left:10px;">
+            <h1>Analysis</h1>
+            <button class="btn btn-default" ng-click="vm.test()">Test</button></button>
+            <button class="btn btn-default" ng-click="vm.previous()">Previous</button></button>
+            <button class="btn btn-default" ng-click="vm.next()">Next</button></button>
+            <stock-chart setting="vm.chartSetting" control="vm.control">
+
+            </stock-chart>
+        </div>
+    </div>
+    <div class="col-sm-3 right-panel">
+    </div>
+</div>

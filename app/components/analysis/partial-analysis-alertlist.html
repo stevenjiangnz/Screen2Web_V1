@@ -1,0 +1,129 @@
+<div class="row">
+    <div class="col-sm-8 middle-panel">
+        <div class="row">
+            <div class="row">
+                <div class="col-lg-5"><h1>Alert List</h1></div>
+
+                <div class="col-lg-7 pull-right">
+       <!--             <div class="btn btn-default pull-right" ng-click="createScan()">
+                        Create
+                    </div>-->
+                </div>
+            </div>
+            <div>
+                <div ng-show="!vm.isloading">
+                    <div>
+                        <div class="pull-right" style="padding-right: 20px" ng-show="alertList.length > 0"><h4>
+                            Total: {{alertList.length}}</h4>
+                        </div>
+                        <div class="row table-container">
+                            <table class="table table-bordered table-striped ">
+                                <thead>
+                                <tr>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'id'; sortReverse = !sortReverse">
+                                        ID
+                                        <span ng-show="sortType == 'id' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'id' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'message'; sortReverse = !sortReverse">
+                                        Share
+                                        <span ng-show="sortType == 'message' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'message' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'message'; sortReverse = !sortReverse">
+                                        Message
+                                        <span ng-show="sortType == 'message' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'message' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'formula'; sortReverse = !sortReverse">
+                                        Formula
+                                        <span ng-show="sortType == 'formula' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'formula' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'isActive'; sortReverse = !sortReverse">
+                                        Is Active
+                                        <span ng-show="sortType == 'isActive' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'isActive' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr dir-paginate="a in alertList | orderBy:sortType:sortReverse | itemsPerPage:15">
+
+                                    <td> {{a.id}}</td>
+                                    <td><a ui-sref="stock({shareId:a.shareId})" target="sharechart">{{getShare(a.shareId).symbol}} ({{a.shareId}})</a></td>
+                                    <td>{{a.message}}</td>
+                                    <td>{{a.formula}}</td>
+                                    <td>{{a.isActive}}</td>
+                                    <td>
+                                        <i class="fa fa-pencil-square-o icon-edit"
+                                           ng-click="updateAlert(a)"></i>
+<!--                                        <i class="fa fa-trash-o icon-delete"
+                                           ng-click="removeScan(scan)"></i>-->
+
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pull-right">
+                            <dir-pagination-controls></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row loading-section clearfix" ng-show="vm.isloading">
+                <h4><i class="fa fa-tasks"></i>
+                    Loading data...</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4 right-panel">
+        <div class="detail-panel">
+            <div class="detail-container">
+                <ul class="nav nav-pills" ng-init="watchVm.activeDetailPanel='details'">
+                    <li class="active"><a>Details</a>
+                    </li>
+
+                </ul>
+                <div class="panel panel-default" id="newSection">
+                    <div class="panel-body">
+
+                        <analysis-alert current-share="currentShare" alert-updated="alertUpdated(alert)"
+                                        alert-created="alertCreated(alert)"
+                                        alert-deleted="alertDeleted(alert)"
+                        ></analysis-alert>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

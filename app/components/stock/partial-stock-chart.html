@@ -1,0 +1,73 @@
+<div class="row">
+    <div class="col-lg-12 chart-switch pull-right">
+        <div class="pull-right">
+        <span class="price-type">
+            <label class="radio-inline">
+                <input type="radio" name="priceType" ng-model="setting.priceType" value="OCHL">OCHL</label>
+            <label class="radio-inline">
+                <input type="radio" name="priceType" ng-model="setting.priceType" value="Line">Line</label>
+        </span>
+            <i class="fa fa-area-chart" ng-click="setting.switch.sma5 = !setting.switch.sma5"
+               ng-style="getColorStyle('sma5')">
+                <span ng-class="{'selected': setting.switch.sma5}" ng-model="setting.switch.sma5">SMA5</span>
+            </i>
+            <i class="fa fa-area-chart" ng-click="setting.switch.sma10 = !setting.switch.sma10"
+               ng-style="getColorStyle('sma10')">
+                <span ng-class="{'selected': setting.switch.sma10}" ng-model="setting.switch.sma10">SMA10</span>
+            </i>
+            <i class="fa fa-area-chart" ng-click="setting.switch.sma30 = !setting.switch.sma30"
+               ng-style="getColorStyle('sma30')">
+                <span ng-class="{'selected': setting.switch.sma30}" ng-model="setting.switch.sma30">SMA30</span>
+            </i>
+            <i class="fa fa-area-chart" ng-click="setting.switch.sma50 = !setting.switch.sma50"
+               ng-style="getColorStyle('sma50')">
+                <span ng-class="{'selected': setting.switch.sma50}" ng-model="setting.switch.sma50">SMA50</span>
+            </i>
+            <i class="fa fa-area-chart" ng-click="setting.switch.sma200 = !setting.switch.sma200"
+               ng-style="getColorStyle('sma200')">
+                <span ng-class="{'selected': setting.switch.sma200}" ng-model="setting.switch.sma200">SMA200</span>
+            </i>
+            <i class="fa fa-area-chart" ng-click="setting.switch.ema10 = !setting.switch.ema10"
+               ng-style="getColorStyle('ema10')">
+                <span ng-class="{'selected': setting.switch.ema10}" ng-model="setting.switch.ema10">EMA10</span>
+            </i>
+            <i class="fa fa-area-chart" ng-click="setting.switch.ema20 = !setting.switch.ema20"
+               ng-style="getColorStyle('ema20')">
+                <span ng-class="{'selected': setting.switch.ema20}" ng-model="setting.switch.ema20">EMA20</span>
+            </i>
+            <i class="fa fa-area-chart" ng-click="setting.switch.bb = !setting.switch.bb"
+               ng-style="getColorStyle('bb')">
+                <span ng-class="{'selected': setting.switch.bb}" ng-model="setting.switch.bb">BB</span>
+            </i></div>
+    </div>
+    <div class="col-lg-12 chart-switch pull-right ">
+        <div class="pull-right">
+            <i class="fa fa-line-chart" ng-click="setting.switch.adx = !setting.switch.adx"
+               ng-style="getColorStyle('adx')">
+                <span ng-class="{'selected': setting.switch.adx}" ng-model="setting.switch.adx">ADX</span>
+            </i>
+            <i class="fa fa-line-chart" ng-click="setting.switch.macd = !setting.switch.macd"
+               ng-style="getColorStyle('macd')">
+                <span ng-class="{'selected': setting.switch.macd}" ng-model="setting.switch.macd">MACD</span>
+            </i>
+            <i class="fa fa-line-chart" ng-click="setting.switch.heikin = !setting.switch.heikin"
+               ng-style="getColorStyle('heikin')">
+                <span ng-class="{'selected': setting.switch.heikin}" ng-model="setting.switch.heikin">Heikin Ashi</span>
+            </i>
+            <i class="fa fa-line-chart" ng-click="setting.switch.stochastic = !setting.switch.stochastic"
+               ng-style="getColorStyle('stochastic')">
+                <span ng-class="{'selected': setting.switch.stochastic}" ng-model="setting.switch.stochastic">Slow Stochastic</span>
+            </i>
+            <i class="fa fa-line-chart" ng-click="setting.switch.rsi = !setting.switch.rsi"
+               ng-style="getColorStyle('rsi')">
+                <span ng-class="{'selected': setting.switch.rsi}" ng-model="setting.switch.rsi">RSI</span>
+            </i>
+            <i class="fa fa-line-chart" ng-click="setting.switch.william = !setting.switch.william"
+               ng-style="getColorStyle('william')">
+                <span ng-class="{'selected': setting.switch.william}" ng-model="setting.switch.william">William %R</span>
+            </i>
+        </div>
+    </div>
+
+    <screen-chart options="chartOptions" chart="chart"></screen-chart>
+</div>

@@ -1,0 +1,22 @@
+<div class="tree-nav-panel">
+    <div>
+        <input type="text" class="form-control tree-filter" id="tree-filter"
+               ng-model="treeFilter" ng-model-options="{ debounce: 600 }"
+               placeholder="type to filter the tree">
+    </div>
+    <div class="tree-control-container">
+        <treecontrol class="tree-dark"
+                     tree-model="dataForTheTree"
+                     options="treeOptions"
+                     filter-expression="treeFilter"
+                     on-selection="showSelected(node)"
+                     selected-node="node1">
+        <span ng-if="node.nodeType=='leaf'">
+         <span>{{node.name}} - {{node.description}}</span>
+        </span>
+        <span ng-if="node.nodeType!='leaf'">
+         {{node.name}} <span ng-if="node.nodeType=='group'"> ({{node.count}})</span>
+        </span>
+        </treecontrol>
+    </div>
+</div>

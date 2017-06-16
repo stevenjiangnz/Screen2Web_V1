@@ -1,0 +1,336 @@
+<div class="row">
+
+    <div class="col-sm-8 middle-panel">
+        <div class="row">
+            <div class="row">
+                <div class="col-lg-5"><h1>Manage Account</h1></div>
+
+                <div class="col-lg-7 pull-right">
+                    <div class="btn btn-default pull-right" ng-click="createAccount()">
+                        Create
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div ng-show="!vm.isloading">
+                    <div>
+                        <div class="pull-right" style="padding-right: 20px" ng-show="accountList.length > 0"><h4>
+                            Total: {{accountList.length}}</h4>
+                        </div>
+                        <div class="row table-container">
+                            <table class="table table-bordered table-striped ">
+                                <thead>
+                                <tr>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'id'; sortReverse = !sortReverse">
+                                        ID
+                                        <span ng-show="sortType == 'id' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'id' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                                        Name
+                                        <span ng-show="sortType == 'name' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'name' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'brokerId'; sortReverse = !sortReverse">
+                                        Broker
+                                        <span ng-show="sortType == 'brokerId' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'brokerId' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'zoneId'; sortReverse = !sortReverse">
+                                        Zone
+                                        <span ng-show="sortType == 'zoneId' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'zoneId' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'fundAmount'; sortReverse = !sortReverse">
+                                        Fund Amount
+                                        <span ng-show="sortType == 'fundAmount' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'fundAmount' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'totalBalance'; sortReverse = !sortReverse">
+                                        Total Balance
+                                        <span ng-show="sortType == 'totalBalance' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'totalBalance' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'availableFund'; sortReverse = !sortReverse">
+                                        Avail Fund
+                                        <span ng-show="sortType == 'availableFund' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'availableFund' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'margin'; sortReverse = !sortReverse">
+                                        Margin
+                                        <span ng-show="sortType == 'margin' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'margin' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'reserve'; sortReverse = !sortReverse">
+                                        Reserve
+                                        <span ng-show="sortType == 'reserve' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'reserve' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'feeSum'; sortReverse = !sortReverse">
+                                        Fee
+                                        <span ng-show="sortType == 'feeSum' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'feeSum' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'status'; sortReverse = !sortReverse">
+                                        Status
+                                        <span ng-show="sortType == 'status' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'status' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                    </th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr dir-paginate="b in accountList | orderBy:sortType:sortReverse | itemsPerPage:15">
+
+                                    <td>{{b.id}}</td>
+                                    <td>{{b.name}}</td>
+                                    <!--<td>{{b.description}}</td>-->
+                                    <td>{{getBroker(b.brokerId).name}} ({{getBroker(b.brokerId).id}})</td>
+                                    <td>{{b.zoneId}}</td>
+                                    <td>{{b.fundAmount | currency}}</td>
+                                    <td>{{b.totalBalance | currency}}</td>
+                                    <td>{{b.availableFund | currency}}</td>
+                                    <td>{{b.margin | currency}}</td>
+                                    <td>{{b.reserve | currency}}</td>
+                                    <td>{{b.feeSum | currency}}</td>
+                                    <td>{{b.status}}</td>
+                                    <td>
+                                        <i class="fa fa-pencil-square-o icon-edit"
+                                           ng-click="updateAccount(b)"></i>
+                                        <i class="fa fa-trash-o icon-delete"
+                                           ng-click="removeAccount(b)"></i>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pull-right">
+                            <dir-pagination-controls></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row loading-section clearfix" ng-show="vm.isloading">
+                <h4><i class="fa fa-tasks"></i>
+                    Loading data...</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4 right-panel">
+        <div class="detail-panel">
+            <div class="detail-container">
+                <ul class="nav nav-pills" ng-init="activeDetailPanel='details'">
+                    <li ng-class="{active: activeDetailPanel=='details'}"><a ng-click="activeDetailPanel='details'">Details</a>
+                    </li>
+                    <li ng-class="{active: activeDetailPanel=='fund'}"
+                        ng-show="localAccount && localAccount.id">
+                        <a ng-click="activeDetailPanel='fund'">Fund</a>
+                    </li>
+                </ul>
+                <div class="panel panel-default" id="newSection"
+                     ng-show="activeDetailPanel=='details'">
+                    <div class="panel-body">
+                        <div>
+                            <h4>Account Details</h4>
+                        </div>
+                        <div class="detail-sub-section">
+                            <form class="form-vertical" name="accountForm">
+                                <fieldset>
+                                    <div class="form-group" ng-show="detailMode == 'update'">
+                                        <label>ID: {{localAccount.id}}</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="accountZone">Zone</label>
+                                        <i class="fa fa-asterisk indicator-required"></i>
+                                        <select class="form-control" id="accountZone" ng-model="localAccount.zoneId"
+                                                ng-options="m.id as m.name for m in optionZoneList">
+                                            <option value="">Current</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="orderAccount">Broker</label>
+                                        <i class="fa fa-asterisk indicator-required"></i>
+                                        <select class="form-control" id="orderAccount" ng-model="localAccount.brokerId"
+                                                ng-options="m.id as m.name for m in optionBrokerList" required>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="accountName" class="control-label">Name</label>
+                                        <i class="fa fa-asterisk indicator-required"></i>
+                                        <div>
+                                            <input type="text" class="form-control" id="accountName" placeholder="Name"
+                                                   ng-model="localAccount.name" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="accountDescription" class="control-label">Description</label>
+                                        <div>
+                                            <textarea rows="2" class="form-control" id="accountDescription"
+                                                      placeholder="Description"
+                                                      ng-model="localAccount.description"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-init="localAccount.availableFund = 50000">
+                                        <label for="accountFundAmount" class="control-label">Fund Amount</label>
+                                        <i class="fa fa-asterisk indicator-required"></i>
+                                        <div>
+                                            <input type="number" class="form-control" id="accountFundAmount"
+                                                   placeholder="Fund Amount"
+                                                   ng-disabled="detailMode == 'update'"
+                                                   min="0" ng-model="localAccount.availableFund" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-show="detailMode == 'update'">
+                                        <label>Balance: {{localAccount.totalBalance | currency}}</label>
+                                    </div>
+                                    <div class="form-group" ng-show="detailMode == 'update'">
+                                        <label>Zone: {{localAccount.zoneId}}</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" ng-model="localAccount.isTrackingAccount">Is Tracking Account
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-init="localAccount.status='Active'">
+                                        <label class="control-label">Status</label>
+                                        <div>
+                                            <label class="radio-inline"><input type="radio" value="Active"
+                                                                               name="accountStatus"
+                                                                               ng-model="localAccount.status">Active</label>
+                                            <label class="radio-inline"><input type="radio" value="Pending"
+                                                                               name="accountStatus"
+                                                                               ng-model="localAccount.status">Pending</label>
+                                            <label class="radio-inline"><input type="radio" value="Close"
+                                                                               name="accountStatus"
+                                                                               ng-model="localAccount.status">Close</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div>
+                                            <button type="submit" class="btn btn-primary"
+                                                    ng-click="submitAccount(accountForm)"
+                                                    ng-disabled="!accountForm.$valid">Submit
+                                            </button>
+                                            <button type="button" class="btn btn-default"
+                                                    ng-click="cancel(accountForm)">Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                    <!--{{localAccount | json}}-->
+                </div>
+                <div class="panel panel-default"
+                     ng-show="activeDetailPanel=='fund'">
+                    <div class="panel-body">
+                        <div>
+                            <h4>Transfer Funds</h4>
+                        </div>
+                        <div class="detail-sub-section" >
+                            <form class="form-vertical" name="fundForm">
+                                <fieldset>
+                                    <div class="form-group">
+                                        <label>Account: {{localAccount.name}} ({{localAccount.id}})</label>
+                                    </div>
+
+                                    <div class="form-group" ng-init="localFund.operation = 'deposit'">
+                                        <label class="control-label">OperationType</label>
+                                        <div>
+                                            <label class="radio-inline"><input type="radio" value="deposit"
+                                                                               name="fundOperation"
+                                                                               ng-model="localFund.operation">Deposit</label>
+                                            <label class="radio-inline"><input type="radio" value="withdraw"
+                                                                               name="fundOperation"
+                                                                               ng-model="localFund.operation">Withdraw</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-init="localFund.fundAmount = 1000">
+                                        <label for="fundTransferAmount" class="control-label">Fund Amount</label>
+                                        <i class="fa fa-asterisk indicator-required"></i>
+                                        <div>
+                                            <input type="number" class="form-control" id="fundTransferAmount"
+                                                   placeholder="Fund Amount"
+                                                   min="0" ng-model="localFund.fundAmount" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div>
+                                            <button type="submit" class="btn btn-primary"
+                                                    ng-click="submitFund(fundForm)"
+                                                    ng-disabled="!fundForm.$valid">Submit
+                                            </button>
+                                            <button type="button" class="btn btn-default"
+                                                    ng-click="cancelFund(fundForm)">Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

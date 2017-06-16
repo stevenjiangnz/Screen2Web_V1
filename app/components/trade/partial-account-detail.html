@@ -1,0 +1,57 @@
+<div class="row">
+
+    <div class="col-sm-8 middle-panel">
+        <div class="row">
+            <div class="row">
+                <div class="col-lg-5"><h1>Account Detail</h1></div>
+
+                <div class="col-lg-7 pull-right">
+<!--                    <div class="btn btn-default pull-right" ng-click="createAccount()">
+                        Create
+                    </div>-->
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row" style="margin-top: 20px">
+            <div class="panel-container">
+                <ul class="nav nav-pills nav-justified" ng-init="activeAccountPanel='summary'">
+                    <li ng-class="{active: activeAccountPanel=='summary'}"><a ng-click="activeAccountPanel='summary'">Summary</a>
+                    </li>
+                    <li ng-class="{active: activeAccountPanel=='order'}"><a ng-click="activeAccountPanel='order'">Orders</a>
+                    </li>
+                    <li ng-class="{active: activeAccountPanel=='position'}"><a ng-click="activeAccountPanel='position'">Positions</a>
+                    </li>
+                    <li ng-class="{active: activeAccountPanel=='transaction'}"><a ng-click="activeAccountPanel='transaction'">Transactions</a>
+                    </li>
+                    <li ng-class="{active: activeAccountPanel=='history'}"><a ng-click="activeAccountPanel='history'">History</a>
+                    </li>
+                </ul>
+
+                <div class="panel panel-default">
+                    <div class="panel-body" ng-if="activeAccountPanel=='summary'">
+                        <account-profile current-account="currentAccount"></account-profile>
+                    </div>
+                    <div class="panel-body" ng-if="activeAccountPanel=='order'">
+                        <account-order current-account="currentAccount"></account-order>
+                    </div>
+                    <div class="panel-body" ng-if="activeAccountPanel=='position'">
+                        <account-position current-account="currentAccount"></account-position>
+                    </div>
+                    <div class="panel-body" ng-if="activeAccountPanel=='transaction'">
+                        <account-log current-account="currentAccount"></account-log>
+                    </div>
+                    <div class="panel-body" ng-if="activeAccountPanel=='history'">
+                        <account-history current-account="currentAccount"></account-history>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4 right-panel">
+        <div class="detail-panel">
+            <stock-action current-share="currentShare"></stock-action>
+        </div>
+    </div>
+</div>

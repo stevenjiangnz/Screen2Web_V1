@@ -1,0 +1,93 @@
+<div class="panel-container" ng-show="currentShare && currentShare.id > 0">
+
+    <ul class="nav nav-pills" ng-init="activeActionPanel='details'">
+        <li ng-class="{active: activeActionPanel=='details'}"><a ng-click="activeActionPanel='details'">Details</a>
+        </li>
+        <li ng-class="{active: activeActionPanel=='indicator'}"><a ng-click="activeActionPanel='indicator'">Indicator</a>
+        </li>
+        <li ng-class="{active: activeActionPanel=='watch'}"><a ng-click="activeActionPanel='watch'">Watch</a>
+        </li>
+        <li ng-class="{active: activeActionPanel=='note'}"><a ng-click="activeActionPanel='note'">Notes</a>
+        </li>
+        <li ng-class="{active: activeActionPanel=='alert'}"><a ng-click="activeActionPanel='alert'">Alerts</a>
+        </li>
+    </ul>
+    <div class="panel panel-default">
+        <!-- Details panel -->
+        <div class="panel-body" ng-if="activeActionPanel=='details'">
+            <table class="table table-striped table-hover table-detail-view ">
+                <thead>
+                <tr>
+                    <th class="table-detail-key"></th>
+                    <th class="table-detail-value"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="table-detail-key">ID</td>
+                    <td class="table-detail-value">{{currentShare.id}}</td>
+                </tr>
+                <tr>
+                    <td>Symbol</td>
+                    <td>{{currentShare.symbol}}</td>
+                </tr>
+                <tr>
+                    <td>Name</td>
+                    <td>{{currentShare.name}}</td>
+                </tr>
+                <tr>
+                    <td>Sector</td>
+                    <td>{{currentShareInfo.ySector}}</td>
+                </tr>
+                <tr>
+                    <td>Industry</td>
+                    <td>{{currentShare.industry}}</td>
+                </tr>
+                <tr>
+                    <td>Type</td>
+                    <td>{{currentShare.shareType}}</td>
+                </tr>
+                <tr>
+                    <td>CFD</td>
+                    <td>{{currentShare.iscfd}}</td>
+                </tr>
+                <tr>
+                    <td>Market Cap(m)</td>
+                    <td>{{currentShareInfo.marketCapM}}</td>
+                </tr>
+                <tr>
+                    <td>Employee Number</td>
+                    <td>{{currentShareInfo.employeeNumber}}</td>
+                </tr>
+                <tr>
+                    <td>Company Summary</td>
+                    <td>{{currentShareInfo.companySummary}}</td>
+                </tr>
+                <tr>
+                    <td>Company Url</td>
+                    <td><a target="_blank"
+                           ng-href="{{currentShareInfo.companyUrl}}">{{currentShareInfo.companyUrl}}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Data Start Date</td>
+                    <td>{{currentShareInfo.dataStartDate}}</td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="panel-body" ng-if="activeActionPanel=='indicator'">
+            <stock-indicator indicator-input="indicatorInput"></stock-indicator>
+        </div>
+        <div class="panel-body" ng-if="activeActionPanel=='watch'">
+            <stock-watch current-share="currentShare"></stock-watch>
+        </div>
+        <div class="panel-body" ng-if="activeActionPanel=='note'">
+            <analysis-note note-input="noteInput"></analysis-note>
+        </div>
+        <div class="panel-body" ng-if="activeActionPanel=='alert'">
+            <analysis-alert current-share="currentShare"></analysis-alert>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,327 @@
+<div>
+
+    <div class="row mode-switch">
+        <i class="fa fa-file-text pull-right" ng-show="(mode!='view') && (mode!='create')" ng-click="mode='view'">
+            <span>View</span></i>
+        <i class="fa fa-pencil-square-o pull-right" ng-show="(mode!='edit') && (mode!='create')" ng-click="mode='edit'">
+            <span>Edit</span></i>
+    </div>
+
+    <div class="admin-detail-view" ng-show="mode=='view'">
+        <div class="row detail-sub-title" ng-init="shareDetailExpanded=true">
+            <label>Share Details</label>
+            <i class="fa fa-minus-square pull-right" ng-show="shareDetailExpanded"
+               ng-click="shareDetailExpanded=!shareDetailExpanded"></i>
+            <i class="fa fa-plus-square pull-right" ng-show="!shareDetailExpanded"
+               ng-click="shareDetailExpanded=!shareDetailExpanded"></i>
+        </div>
+        <div class="detail-sub-section" ng-show="shareDetailExpanded">
+            <table class="table table-striped table-hover table-detail-view ">
+                <thead>
+                <tr>
+                    <th class="table-detail-key"></th>
+                    <th class="table-detail-value"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="table-detail-key">ID</td>
+                    <td class="table-detail-value">{{localShare.id}}</td>
+                </tr>
+                <tr>
+                    <td>Symbol</td>
+                    <td>{{localShare.symbol}}</td>
+                </tr>
+                <tr>
+                    <td>Name</td>
+                    <td>{{localShare.name}}</td>
+                </tr>
+                <tr>
+                    <td>Sector</td>
+                    <td>{{localShare.sector}}</td>
+                </tr>
+                <tr>
+                    <td>Industry</td>
+                    <td>{{localShare.industry}}</td>
+                </tr>
+                <tr>
+                    <td>Type</td>
+                    <td>{{localShare.shareType}}</td>
+                </tr>
+                <tr>
+                    <td>Is CFD</td>
+                    <td>{{localShare.iscfd}}</td>
+                </tr>
+                <tr>
+                    <td>Is Active</td>
+                    <td>{{localShare.isActive}}</td>
+                </tr>
+                <tr>
+                    <td>Last Processed</td>
+                    <td>{{localShare.lastProcessed | date:"dd/MM/yyyy 'at' h:mma"}}</td>
+                </tr>
+                <tr>
+                    <td>Market</td>
+                    <td>{{localShare.marketId}}</td>
+                </tr>
+                <tr>
+                    <td>Comments</td>
+                    <td>{{localShare.processComment}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row detail-sub-title" ng-init="shareInfoExpanded=true">
+            <label>Share Info</label>
+            <i class="fa fa-minus-square pull-right" ng-show="shareInfoExpanded"
+               ng-click="shareInfoExpanded=!shareInfoExpanded"></i>
+            <i class="fa fa-plus-square pull-right" ng-show="!shareInfoExpanded"
+               ng-click="shareInfoExpanded=!shareInfoExpanded"></i>
+        </div>
+        <div class="detail-sub-section" ng-show="shareInfoExpanded">
+            <table class="table table-striped table-hover table-detail-view">
+                <thead>
+                <tr>
+                    <th class="table-detail-key"></th>
+                    <th class="table-detail-value"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Sector</td>
+                    <td>{{shareInfo.ySector}}</td>
+                </tr>
+                <tr>
+                    <td>Industry</td>
+                    <td>{{shareInfo.yIndustry}}</td>
+                </tr>
+                <tr>
+                    <td>Employee Number</td>
+                    <td>{{shareInfo.employeeNumber}}</td>
+                </tr>
+                <tr>
+                    <td>Market Cap(m)</td>
+                    <td>{{shareInfo.marketCapM}}</td>
+                </tr>
+                <tr>
+                    <td>Company Summary</td>
+                    <td>{{shareInfo.companySummary}}</td>
+                </tr>
+                <tr>
+                    <td>Is Top 50</td>
+                    <td>{{shareInfo.isTop50}}</td>
+                </tr>
+                <tr>
+                    <td>Is Top 100</td>
+                    <td>{{shareInfo.isTop100}}</td>
+                </tr>
+                <tr>
+                    <td>Is Top 200</td>
+                    <td>{{shareInfo.isTop200}}</td>
+                </tr>
+                <tr>
+                    <td>Is Top 300</td>
+                    <td>{{shareInfo.isTop300}}</td>
+                </tr>
+                <tr>
+                    <td>Company Url</td>
+                    <td><a target="_blank" ng-href="{{shareInfo.companyUrl}}">{{shareInfo.companyUrl}}</a></td>
+                </tr>
+                <tr>
+                    <td>Last Processed</td>
+                    <td>{{shareInfo.lastProcessed | date:"dd/MM/yyyy 'at' h:mma"}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="admin-detail-edit" ng-show="mode=='edit' || mode=='create'">
+        <div>
+            <div class="row detail-sub-title" ng-init="shareDetailEditExpanded=true">
+                <label>Share Details - {{localShare.id}}</label>
+                <i class="fa fa-minus-square pull-right" ng-show="shareDetailEditExpanded"
+                   ng-click="shareDetailEditExpanded=!shareDetailEditExpanded"></i>
+                <i class="fa fa-plus-square pull-right" ng-show="!shareDetailEditExpanded"
+                   ng-click="shareDetailEditExpanded=!shareDetailEditExpanded"></i>
+            </div>
+            <div class="detail-sub-section" ng-show="shareDetailEditExpanded">
+                <form class="form-vertical" name="shareForm">
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="shareMarket">Market</label><i class="fa fa-asterisk indicator-required"></i>
+                            <select class="form-control" id="shareMarket" ng-model="localShare.marketId"
+                                    ng-options="m.id as m.description for m in marketList" required>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="shareSymbol" class="control-label">Symbol</label>
+                            <i class="fa fa-asterisk indicator-required"></i>
+                            <div>
+                                <input type="text" class="form-control" id="shareSymbol" placeholder="Symbol"
+                                       ng-model="localShare.symbol" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="shareName" class="control-label">Name</label>
+                            <i class="fa fa-asterisk indicator-required"></i>
+                            <div>
+                                <input type="text" class="form-control" id="shareName" placeholder="Name"
+                                       ng-model="localShare.name" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="shareIndustry" class="control-label">Sector</label>
+                            <i class="fa fa-asterisk indicator-required"></i>
+                            <div>
+                                <input type="text" class="form-control" id="shareSector" placeholder="Sector"
+                                       ng-model="localShare.sector" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="shareIndustry" class="control-label">Industry</label>
+                            <i class="fa fa-asterisk indicator-required"></i>
+                            <div>
+                                <input type="text" class="form-control" id="shareIndustry" placeholder="Industry"
+                                       ng-model="localShare.industry" required>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-init="localShare.shareType='Stock'">
+                            <label class="control-label">Type</label>
+                            <div>
+                                <label class="radio-inline"><input type="radio" value="Stock" name="shareType"
+                                                                   ng-model="localShare.shareType">Stock</label>
+                                <label class="radio-inline"><input type="radio" value="ETF" name="shareType"
+                                                                   ng-model="localShare.shareType">ETF</label>
+                                <label class="radio-inline"><input type="radio" value="Index" name="shareType"
+                                                                   ng-model="localShare.shareType">Index</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="shareComment" class="control-label">Comments</label>
+                            <div>
+                        <textarea rows="2" class="form-control" id="shareComment" placeholder="Comments"
+                                  ng-model="localShare.processComment"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-model="localShare.iscfd">Is CFD
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-model="localShare.isActive">Is Active
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <button type="submit" class="btn btn-primary" ng-click="submitShare()"
+                                        ng-disabled="!shareForm.$valid">Submit
+                                </button>
+                                <button type="button" class="btn btn-default" ng-click="cancelShare()">Cancel</button>
+                                <button type="button" class="btn btn-primary" ng-click="refreshHistory()"
+                                        ng-show="mode=='edit'">Refresh History</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div ng-show="localShare && localShare.id > 0">
+            <div class="row detail-sub-title" ng-init="shareInfoEditExpanded=true">
+                <label>Share Info - {{shareInfo.id}}</label>
+                <i class="fa fa-minus-square pull-right" ng-show="shareInfoEditExpanded"
+                   ng-click="shareInfoEditExpanded=!shareInfoEditExpanded"></i>
+                <i class="fa fa-plus-square pull-right" ng-show="!shareInfoEditExpanded"
+                   ng-click="shareInfoEditExpanded=!shareInfoEditExpanded"></i>
+            </div>
+            <div class="detail-sub-section" ng-show="shareInfoEditExpanded">
+                <form class="form-vertical" name="shareInfoForm">
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="shareMarket">Sector</label>
+                            <div>
+                                <input type="text" class="form-control" id="shareInfoSector" placeholder="Sector"
+                                       ng-model="localShareInfo.ySector">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="shareInfoIndustry">Industry</label>
+                            <div>
+                                <input type="text" class="form-control" id="shareInfoIndustry" placeholder="Industry"
+                                       ng-model="localShareInfo.yIndustry">
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="shareInfoEmployeeNum">Employee Number</label>
+                            <div>
+                                <input type="text" class="form-control" id="shareInfoEmployeeNum"
+                                       placeholder="employee Number"
+                                       ng-model="localShareInfo.employeeNumber">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="shareInfoMarketCapM">Market Cap M</label>
+                            <div>
+                                <input type="text" class="form-control" id="shareInfoMarketCapM"
+                                       placeholder="Market Cap in Million"
+                                       ng-model="localShareInfo.marketCapM">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="shareInfoCompanySummary">Company Summary</label>
+                            <div>
+                            <textarea rows="5" class="form-control" id="shareInfoCompanySummary"
+                                      placeholder="Company Summary"
+                                      ng-model="localShareInfo.companySummary"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="shareInfoCompanyUrl">Company Url</label>
+                            <div>
+                                <input type="text" class="form-control" id="shareInfoCompanyUrl"
+                                       placeholder="Company Url"
+                                       ng-model="localShareInfo.companyUrl">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox-inline">
+                                <label>
+                                    <input type="checkbox" ng-model="localShareInfo.isTop50">ASX 50
+                                </label>
+                            </div>
+                            <div class="checkbox-inline">
+                                <label>
+                                    <input type="checkbox" ng-model="localShareInfo.isTop100">ASX 100
+                                </label>
+                            </div>
+                            <div class="checkbox-inline">
+                                <label>
+                                    <input type="checkbox" ng-model="localShareInfo.isTop200">ASX 200
+                                </label>
+                            </div>
+                            <div class="checkbox-inline">
+                                <label>
+                                    <input type="checkbox" ng-model="localShareInfo.isTop300">ASX 300
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <button type="submit" class="btn btn-primary" ng-click="submitShareInfo()">Submit
+                                </button>
+                                <button type="button" class="btn btn-default" ng-click="cancelShareInfo()">Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

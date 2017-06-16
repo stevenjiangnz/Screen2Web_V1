@@ -1,0 +1,82 @@
+<div class="row">
+    <div class="col-sm-8 middle-panel">
+        <div class="row">
+            <div class="row">
+                <div class="col-lg-7"><h1>Manage Share List</h1></div>
+                <div class="col-lg-5" ng-show="!vm.isloading">
+                    <i class="fa  fa-list pull-right" ng-click="vm.mainMode='list'" ng-show="vm.mainMode!='list'">
+                        <span>List</span></i>
+                    <i class="fa fa-file-o pull-right" ng-click="vm.createShare()" ng-show="vm.mainMode=='list'">
+                        <span>Create</span></i>
+                </div>
+            </div>
+            <div ng-show="vm.mainMode == 'list'">
+                <div class="row table-container" ng-show="!vm.isloading">
+                    <table datatable="ng" dt-options="vm.dtOptions" class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Symbol</th>
+                            <th>Type</th>
+                            <th>Name</th>
+                            <th>Sector</th>
+                            <th>Industry</th>
+                            <th>CFD</th>
+                            <th>Active</th>
+                            <th style="width:40px"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="share in vm.shareList track by $index">
+                            <td>{{share.id }}</td>
+                            <td>{{share.symbol }}</td>
+                            <td>{{share.shareType }}</td>
+                            <td>{{share.name }}</td>
+                            <td>{{share.sector }}</td>
+                            <td>{{share.industry }}</td>
+                            <td>{{vm.formatIsActive(share.iscfd)}}
+                            <td>{{vm.formatIsActive(share.isActive)}}
+                            </td>
+                            <td><i class="fa fa-bar-chart chart-link"
+                                   ng-click="vm.selectChart(share)"></i>
+                                <i class="fa fa-info-circle detail-link"
+                                   ng-click="vm.selectShare(share)"></i>
+
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div ng-show="vm.mainMode == 'chart'" class="screen-chart-container">
+                <screen-chart options="vm.chartOptions" chart="vm.chart"></screen-chart>
+            </div>
+            <div class="row loading-section clearfix" ng-show="vm.isloading">
+                <h4><i class="fa fa-tasks"></i>
+                    Loading data...</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4 right-panel" ng-show="vm.currentShare">
+
+
+        <div class="detail-container">
+            <ul class="nav nav-pills" ng-init="vm.activeDetailPanel='details'">
+                <li ng-class="{active: vm.activeDetailPanel=='details'}"><a ng-click="vm.activeDetailPanel='details'">Details</a>
+                </li>
+
+            </ul>
+            <div class="panel panel-default " ng-if="vm.activeDetailPanel=='details'">
+
+                <div class="panel-body">
+                    <share-detail share="vm.currentShare" share-info="vm.currentShareInfo"
+                                  market-list="vm.marketList" share-updated="vm.shareUpdated(share)"
+                                  share-created="vm.shareCreated(share)" mode="vm.detailMode">
+                    </share-detail>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

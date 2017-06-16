@@ -1,0 +1,152 @@
+<div class="row">
+
+    <div class="col-sm-8 middle-panel">
+        <div class="row">
+            <div class="row">
+                <div class="col-lg-5"><h1>Trading Plan</h1></div>
+
+                <div class="col-lg-7 pull-right">
+                    <div class="btn btn-default pull-right" ng-click="createPlan()">
+                        Create
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <form method="post" name="planForm">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading" ng-init="searchExpanded =true">
+                            <span style="font-weight: bold; font-size: 1.1em">Plan Details</span>
+                            <i class="fa fa-minus-square pull-right" ng-show="searchExpanded"
+                               ng-click="searchExpanded=!searchExpanded"></i>
+                            <i class="fa fa-plus-square pull-right" ng-show="!searchExpanded"
+                               ng-click="searchExpanded=!searchExpanded"></i>
+                        </div>
+                        <div class="panel-body" ng-show="searchExpanded">
+                            <fieldset>
+                                <div class="form-group col-sm-6">
+                                    <input type="text" class="form-control" id="planDate"
+                                           placeholder="Plan Date E.g 20160801"
+                                           ng-model="localPlan.tradingDate" required>
+
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <div class="form-group" ng-init="localPlan.status='Active'">
+                                        <div style="font-size: 1.5em !important; font-weight: bold">
+                                            <label class="radio-inline"><input type="radio" value="Active"
+                                                                               name="status"
+                                                                               ng-model="localPlan.status">Active</label>
+                                            <label class="radio-inline"><input type="radio" value="Archive"
+                                                                               name="status"
+                                                                               ng-model="localPlan.status">Archive</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <button type="button" class="btn btn-primary pull-right"
+                                            ng-click="cancel(planForm)">Cancel
+                                    </button>
+                                    <button class="btn btn-primary pull-right" ng-click="submitPlan(planForm)"
+                                            ng-disabled="!planForm.$valid" style="margin-right: 10px">Submit</button>
+
+
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+
+                    <textarea ui-tinymce="tinymceOptions" ng-model="localPlan.content"></textarea>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4 right-panel">
+        <div class="detail-panel">
+            <div class="detail-container">
+                <ul class="nav nav-pills" ng-init="watchVm.activeDetailPanel='details'">
+                    <li class="active"><a>Details</a>
+                    </li>
+
+                </ul>
+                <div class="panel panel-default" id="newSection">
+                    <div class="panel-body">
+                        <div>
+                            <h4>Plan List</h4>
+                        </div>
+                        <div class="detail-sub-section">
+                            <div class="row table-container">
+                                <table class="table table-bordered table-striped ">
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                       <span class="sortable-header"
+                                             ng-click="sortType = 'id'; sortReverse = !sortReverse">
+                                        ID
+                                        <span ng-show="sortType == 'id' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'id' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                        </th>
+                                        <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'tradingDate'; sortReverse = !sortReverse">
+                                        Start
+                                        <span ng-show="sortType == 'tradingDate' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'tradingDate' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                        </th>
+                                        <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'status'; sortReverse = !sortReverse">
+                                        Status
+                                        <span ng-show="sortType == 'status' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'status' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                        </th>
+                                        <th>
+                                        <span class="sortable-header"
+                                              ng-click="sortType = 'modified'; sortReverse = !sortReverse">
+                                        Modified
+                                        <span ng-show="sortType == 'modified' && !sortReverse"
+                                              class="fa fa-caret-down pull-right"></span>
+                                        <span ng-show="sortType == 'modified' && sortReverse"
+                                              class="fa fa-caret-up pull-right"></span>
+                                        </span>
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr dir-paginate="b in planList | orderBy:sortType:sortReverse | itemsPerPage:15">
+
+                                        <td>{{b.id}}</td>
+                                        <td>{{b.tradingDate}}</td>
+                                        <td>{{b.status}}</td>
+                                        <td>{{b.modified | date : 'yyyy-MM-dd, hh:mm a'}}</td>
+
+                                        <td>
+                                            <i class="fa fa-pencil-square-o icon-edit"
+                                               ng-click="updatePlan(b)"></i>
+                                            <i class="fa fa-trash-o icon-delete"
+                                               ng-click="removePlan(b)"></i>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="pull-right">
+                                <dir-pagination-controls></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
