@@ -21,6 +21,7 @@
     "run-sequence": "^1.1.5"
   },
   "scripts": {
+    "start": "ws -p 9000", 
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
